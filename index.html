@@ -70,11 +70,11 @@
       cursor:pointer;
       font-size: 13px;
       font-weight: 500;
-      transition: background 0.2s, border-color 0.2s;
+      transition: background 0.2s;
     }
-    .topBtn:hover{ background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.15); }
+    .topBtn:hover{ background: rgba(255,255,255,0.12); }
 
-    /* MAIN BACKGROUND (Apenas textura ou vazio) */
+    /* MAIN BG */
     .main{
       position: absolute;
       top: 64px; left:0; right:0; bottom:0;
@@ -82,15 +82,11 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      opacity: 0.2;
+      opacity: 0.15;
     }
-    .main h1 {
-        font-size: 3rem;
-        text-align: center;
-        margin: 0;
-    }
+    .main i { font-size: 5rem; color: var(--accent); }
 
-    /* DOCK ROOT */
+    /* DOCK */
     .dockRoot{
       position: fixed;
       left:0; right:0;
@@ -103,7 +99,6 @@
     }
     .dockRoot > *{ pointer-events: auto; }
 
-    /* DOCK CARD GLASS */
     .dock{
       position: relative;
       width: min(920px, 100%);
@@ -119,7 +114,7 @@
     .dockLeft, .dockRight{ display:flex; align-items:center; gap: 12px; }
 
     .iconBtn{
-      width: 40px; height: 40px;
+      width: 44px; height: 44px;
       border-radius: 50%;
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.05);
@@ -128,59 +123,42 @@
       display:flex; align-items:center; justify-content:center;
       transition: all 0.2s;
     }
-    .iconBtn:hover{ background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.2); }
+    .iconBtn:hover{ background: rgba(255,255,255,0.15); }
 
     .pillMuted{
       height: 40px;
       padding: 0 16px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.05);
       background: rgba(0,0,0,0.3);
       display:flex;
       align-items:center;
       gap: 10px;
       color: rgba(255,255,255,0.7);
       font-size: 13px;
-      font-weight: 500;
     }
 
-    /* Tooltip T */
-    .tBtn{ position:relative; }
-    .tBtn .tip{
-      position:absolute; left: 50%; top: -12px;
-      transform: translate(-50%,-100%);
-      padding: 8px 12px; border-radius: 12px;
-      background: #000; border: 1px solid rgba(255,255,255,0.1);
-      color: #fff; font-size: 12px; font-weight: 600;
-      white-space: nowrap; opacity: 0; pointer-events:none;
-      transition: all 0.2s ease;
-    }
-    .tBtn:hover .tip{ opacity: 1; transform: translate(-50%,-120%); }
-    .tBtn.active{ background: rgba(255,255,255,0.15); box-shadow: 0 0 0 1px var(--accent) inset; color: var(--accent);}
+    .tBtn.active{ color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
 
     .ctaBtn{
       height: 48px;
-      padding: 0 24px;
+      padding: 0 28px;
       border-radius: 999px; border:none;
       background: var(--accent); color: #000;
       font-size: 15px; font-weight: 800; cursor:pointer;
-      display:flex; align-items:center; justify-content:center; gap: 8px;
-      transition: transform 0.1s, opacity 0.2s;
+      display:flex; align-items:center; justify-content:center; gap: 10px;
       box-shadow: 0 8px 20px rgba(255,217,42,0.3);
     }
-    .ctaBtn:active{ transform: scale(0.95); }
-    .ctaBtn:disabled{ opacity: 0.3; cursor: not-allowed; transform: none; box-shadow:none;}
+    .ctaBtn:disabled{ opacity: 0.3; cursor: not-allowed; box-shadow:none; }
 
     .dockBody{ padding: 18px 0; }
     .prompt{
       width: 100%; min-height: 50px;
       background: transparent; border: none; outline: none; resize: none;
-      color: #fff; font-size: 16px; font-family: inherit; line-height: 1.5;
+      color: #fff; font-size: 16px; font-family: inherit;
     }
-    .prompt::placeholder{ color: rgba(255,255,255,0.25); }
 
     .dockBottom{
-      display:flex; flex-wrap: wrap; gap: 12px;
+      display:flex; gap: 12px;
       align-items:center; justify-content:flex-start;
       border-top: 1px solid rgba(255,255,255,0.06);
       padding-top: 16px;
@@ -191,199 +169,126 @@
     .chip{
       height: 38px; padding: 0 16px; border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04);
-      color: #fff; cursor:pointer; font-size: 13px; font-weight: 500;
+      color: #fff; cursor:pointer; font-size: 13px;
       display:flex; align-items:center; gap:8px;
-      transition: all 0.2s;
     }
-    .chip:hover{ background: rgba(255,255,255,0.1); }
 
     .pop{
       position:absolute; left: 0; bottom: calc(100% + 16px);
       min-width: 280px; border-radius: 24px;
       backdrop-filter: blur(30px); background: var(--glass2);
       border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: rgba(0,0,0,0.4) 0 20px 50px;
-      overflow:hidden; z-index: 999;
-      opacity: 0; transform: translateY(10px); pointer-events: none;
-      transition: all 0.2s ease;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      z-index: 999; display: none;
     }
-    .pop.show{ opacity: 1; transform: translateY(0); pointer-events: auto; }
-
+    .pop.show{ display: block; }
     .popSec{ padding: 20px; display:flex; flex-direction:column; gap: 14px; }
-    .popTitle{ font-weight: 800; font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px;}
+    .popTitle{ font-weight: 800; font-size: 12px; color: rgba(255,255,255,0.4); text-transform: uppercase; }
 
-    .grid3{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .grid3{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
     .tile{
-      height: 42px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.85);
-      cursor:pointer; font-size: 13px; font-weight: 600;
-      transition: all 0.2s;
+      height: 40px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
+      background: transparent; color: #fff; cursor:pointer; font-size: 13px;
     }
-    .tile.active{ background: #fff; color: #000; border-color: #fff; }
+    .tile.active{ background: #fff; color: #000; font-weight: 700; }
 
-    .list{ display:flex; flex-direction:column; gap: 4px; max-height: 280px; overflow-y:auto; padding-right: 4px;}
-    .list::-webkit-scrollbar{ width:4px; }
-    .list::-webkit-scrollbar-thumb{ background: rgba(255,255,255,0.2); border-radius:4px; }
     .listItem{
-      text-align:left; padding: 14px 16px; border-radius: 14px; border: none;
-      background: transparent; color: rgba(255,255,255,0.9);
-      cursor:pointer; font-size: 13px; font-weight: 500; transition: all 0.2s;
+      text-align:left; padding: 12px 16px; border-radius: 12px; border: none;
+      background: transparent; color: #fff; cursor:pointer; width: 100%;
     }
-    .listItem:hover{ background: rgba(255,255,255,0.08); }
-    .listItem.active{ background: rgba(255,255,255,0.15); font-weight: 700; color:#fff;}
-
-    /* Toast */
-    .toast{
-      position: fixed; left: 50%; top: 84px; transform: translate(-50%, -10px);
-      z-index: 200; padding: 14px 20px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(20px); color: #fff; font-size: 14px; font-weight: 500;
-      display:flex; gap: 12px; align-items:center;
-      opacity: 0; pointer-events: none; transition: all 0.3s;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    .toast.show{ opacity: 1; transform: translate(-50%, 0); }
+    .listItem.active{ background: rgba(255,255,255,0.1); font-weight: 700; }
 
     /* MODAL */
     .overlay{
       position: fixed; inset: 0; z-index: 500;
-      background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(10px);
       display:none; align-items:center; justify-content:center; padding: 20px;
     }
     .overlay.show{ display:flex; }
-
     .modal{
-      width: min(720px, 100%); border-radius: 28px;
-      background: rgba(18, 22, 20, 0.9); backdrop-filter: blur(30px);
-      border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-      overflow:hidden;
+      width: min(700px, 100%); border-radius: 28px;
+      background: rgba(18, 22, 20, 0.95); backdrop-filter: blur(30px);
+      border: 1px solid rgba(255,255,255,0.12); overflow:hidden;
     }
     .modalHead{
       display:flex; align-items:center; justify-content:space-between;
       padding: 24px 30px; border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    .modalTitle{ font-weight: 800; font-size: 18px; }
     .closeBtn{
-      width: 36px; height: 36px; border-radius: 50%; border: none;
-      background: rgba(255,255,255,0.06); color:#fff; cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      transition: background 0.2s;
+      background: none; border: none; color: #fff; cursor: pointer;
     }
-    .closeBtn:hover{ background: rgba(255,255,255,0.15); }
-    .modalBody{ padding: 30px; display:flex; flex-direction:column; gap: 20px; max-height: 75vh; overflow-y: auto;}
+    .modalBody{ padding: 30px; max-height: 70vh; overflow-y: auto; }
     
     .panel{
       border-radius: 20px; border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02); padding: 24px;
+      background: rgba(255,255,255,0.02); padding: 24px; margin-bottom: 20px;
     }
-    .label{ font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 12px; font-weight: 700; text-transform: uppercase; letter-spacing:0.5px;}
-    
-    .inputRow{ display:flex; gap: 12px; align-items:center; }
+    .label{ font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; margin-bottom: 12px;}
+
     input[type="password"]{
-      flex: 1; height: 48px; border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.5);
-      color:#fff; padding: 0 16px; outline:none; font-family: monospace; font-size:15px;
-      transition: border-color 0.2s;
+      width: 100%; height: 48px; border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.15); background: #000;
+      color:#fff; padding: 0 16px; outline:none; margin-bottom: 12px;
     }
-    input[type="password"]:focus{ border-color: var(--accent); }
-    .btn{
-      height: 48px; padding: 0 20px; border-radius: 14px; border:none;
-      cursor:pointer; font-weight: 700; font-size: 14px; transition: opacity 0.2s;
-    }
-    .btn:hover{ opacity: 0.9; }
-    .btnAccent{ background: var(--accent); color:#000; }
-    .btnMuted{ background: rgba(255,255,255,0.1); color:#fff; }
-    .note{ font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; margin-top: 12px; }
 
-    /* Upload cards */
-    .uploadGrid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    @media (max-width: 600px){ .uploadGrid{ grid-template-columns: 1fr; } }
+    /* Slots */
+    .uploadGrid{ display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .slot{
-      border-radius: 20px; border: 2px dashed rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.02); padding: 20px; min-height: 240px;
-      display:flex; flex-direction:column; gap: 14px; cursor:pointer; transition: all 0.2s;
+      border: 2px dashed rgba(255,255,255,0.15); border-radius: 20px;
+      padding: 20px; min-height: 220px; display: flex; flex-direction: column; cursor: pointer;
     }
-    .slot:hover{ border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.05); }
-    .slotTitle{ font-weight: 800; font-size: 14px; }
-    .slotSub{ color: rgba(255,255,255,0.5); font-size: 12px; }
-    .preview{
-      flex:1; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05);
-      background: rgba(0,0,0,0.4); background-size: cover; background-position: center; min-height: 120px;
-    }
-    .slotFoot{ display:flex; justify-content:space-between; align-items:center; }
-    .fileName{ font-size: 12px; color: rgba(255,255,255,0.6); overflow:hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px; font-weight:600;}
-    .miniBtn{
-      height: 32px; padding: 0 14px; border-radius: 999px; border:none;
-      background: rgba(255,255,255,0.1); color:#fff; cursor:pointer;
-      font-size: 12px; font-weight: 700; transition: background 0.2s;
-    }
-    .miniBtn:hover{ background: rgba(255,255,255,0.2); }
-
+    .preview{ flex: 1; border-radius: 14px; background: rgba(0,0,0,0.4); background-size: cover; background-position: center; margin: 10px 0; }
+    
     pre{
-      margin:0; white-space: pre-wrap; word-break: break-word;
-      font-family: ui-monospace, monospace; font-size: 14px; line-height: 1.6;
-      color: rgba(255,255,255,0.9); background: rgba(0,0,0,0.5);
-      padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);
+      background: #000; padding: 20px; border-radius: 16px; color: #fff;
+      font-family: monospace; white-space: pre-wrap; font-size: 14px; line-height: 1.6;
     }
 
-    @media (max-width: 767px){
-      .dockRoot{ padding: 0; bottom:0;}
-      .dock{ width: 100%; border-radius: 32px 32px 0 0; border-bottom: none; border-left:none; border-right:none;}
-      .pop{ left: 16px; right:16px; min-width: auto; bottom: calc(100% + 10px);}
-      .topActions .topBtn:not(#btnConfig) { display: none; }
+    @media (max-width: 600px){
+      .dock{ width: 100%; border-radius: 32px 32px 0 0; }
+      .uploadGrid{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body>
   <header class="topbar">
-    <div class="brand">
-      <span class="brandDot"></span>
-      <span>Engenharia de Prompt para Staging</span>
-    </div>
+    <div class="brand"><span class="brandDot"></span> Mobiliando com IA</div>
     <div class="topActions">
-      <button class="topBtn" id="btnConfig"><i class="fa-solid fa-gear" style="margin-right:6px;"></i> Configurações</button>
+      <button class="topBtn" id="btnConfig">Configurações</button>
       <button class="topBtn" id="btnHelp">Ajuda</button>
-      <button class="topBtn" id="btnSupport">Suporte</button>
     </div>
   </header>
 
-  <div class="toast" id="toast"><i class="fa-solid fa-circle-info"></i><span id="toastText"></span></div>
+  <div class="toast" id="toast"></div>
 
   <main class="main">
-    <h1><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--accent);"></i></h1>
-    <p style="margin-top:10px; color:rgba(255,255,255,0.5); font-weight:500;">O Motor Analítico está Pronto</p>
+    <i class="fa-solid fa-wand-magic-sparkles"></i>
+    <p style="color:rgba(255,255,255,0.4)">Anexe uma foto e peça o seu Staging</p>
   </main>
 
   <div class="dockRoot">
     <div class="dock" id="dock">
       <div class="dockTop">
         <div class="dockLeft">
-          <button class="iconBtn" id="btnUploads" title="Anexar Imagens"><i class="fa-solid fa-image"></i></button>
-          <div class="pillMuted" id="pillStatus"><i class="fa-solid fa-bolt" style="color:var(--accent);"></i><span id="statusText">Aguardando Foto...</span></div>
+          <button class="iconBtn" id="btnUploads"><i class="fa-solid fa-image"></i></button>
+          <div class="pillMuted" id="statusText">Aguardando Foto...</div>
         </div>
         <div class="dockRight">
-          <button class="iconBtn tBtn active" id="btnAuto">
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
-            <span class="tip">Lapidar Prompt (Ativo)</span>
-          </button>
-          <button class="ctaBtn" id="btnRun" disabled title="Gerar Prompt">
-            Gerar Prompt <i class="fa-solid fa-arrow-right"></i>
-          </button>
+          <button class="iconBtn tBtn active" id="btnAuto"><i class="fa-solid fa-magic"></i></button>
+          <button class="ctaBtn" id="btnRun" disabled>Gerar Prompt <i class="fa-solid fa-arrow-right"></i></button>
         </div>
       </div>
-
       <div class="dockBody">
-        <textarea class="prompt" id="userPrompt" rows="2" placeholder="Descreve como mobiliar (ex: adicionar sofá de linho branco e mesa de centro rústica)..."></textarea>
+        <textarea class="prompt" id="userPrompt" rows="2" placeholder="Ex: Adicionar um sofá contemporâneo e quadros abstratos..."></textarea>
       </div>
-
       <div class="dockBottom">
         <div class="popWrap">
-          <button class="chip popTrigger" data-pop="popFormat"><i class="fa-solid fa-crop-simple" style="opacity:0.5"></i> <span id="formatLabel">16:9</span></button>
+          <button class="chip popTrigger" data-pop="popFormat">Formato: <span id="formatLabel">16:9</span></button>
           <div class="pop" id="popFormat">
             <div class="popSec">
-              <div class="popTitle">Aspect Ratio (Para o Prompt)</div>
-              <div class="grid3" id="formatChoices">
+              <div class="popTitle">Aspect Ratio</div>
+              <div class="grid3">
                 <button class="tile active" data-format="16:9">16:9</button>
                 <button class="tile" data-format="9:16">9:16</button>
                 <button class="tile" data-format="4:3">4:3</button>
@@ -391,20 +296,17 @@
             </div>
           </div>
         </div>
-
         <div class="popWrap">
-          <button class="chip popTrigger" data-pop="popStyle"><i class="fa-solid fa-couch" style="opacity:0.5"></i> <span id="styleLabel">AUTO</span></button>
+          <button class="chip popTrigger" data-pop="popStyle">Estilo: <span id="styleLabel">AUTO</span></button>
           <div class="pop" id="popStyle">
             <div class="popSec">
-              <div class="popTitle">Estilo Decorativo</div>
-              <div class="list" id="styleChoices">
-                <button class="listItem active" data-style="AUTO">Decisão Automática (IA)</button>
-                <button class="listItem" data-style="E01">Minimalista Quente</button>
-                <button class="listItem" data-style="E02">Contemporâneo Neutro</button>
-                <button class="listItem" data-style="E03">Escandinavo Natural</button>
-                <button class="listItem" data-style="E04">Urbano Industrial Suave</button>
-                <button class="listItem" data-style="E05">Mediterrâneo Atemporal</button>
-              </div>
+              <div class="popTitle">Estilo</div>
+              <button class="listItem active" data-style="AUTO">Decisão da IA</button>
+              <button class="listItem" data-style="E01">Minimalista Quente</button>
+              <button class="listItem" data-style="E02">Contemporâneo Neutro</button>
+              <button class="listItem" data-style="E03">Escandinavo Natural</button>
+              <button class="listItem" data-style="E04">Urbano Industrial</button>
+              <button class="listItem" data-style="E05">Mediterrâneo</button>
             </div>
           </div>
         </div>
@@ -415,43 +317,14 @@
   <div class="overlay" id="ovConfig">
     <div class="modal">
       <div class="modalHead">
-        <div class="modalTitle">Configurações de Acesso</div>
-        <button class="closeBtn closeConfigBtn">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
+        <b>Configurações</b>
+        <button class="closeBtn" onclick="closeModal('ovConfig')"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modalBody">
         <div class="panel">
-          <div class="label">Google Gemini API Key</div>
-          <div class="inputRow">
-            <input type="password" id="apiKey" placeholder="Cola a tua API Key aqui..." />
-            <button class="btn btnAccent" id="saveKey">Guardar</button>
-            <button class="btn btnMuted" id="getKey">Obter Chave (Grátis)</button>
-          </div>
-          <div class="note" id="keyHint">A leitura de imagens e engenharia de prompt não consome a cota paga da API. É 100% gratuito.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="overlay" id="ovHelp">
-    <div class="modal">
-      <div class="modalHead">
-        <div class="modalTitle">Como Usar o Engenheiro</div>
-        <button class="closeBtn closeHelpBtn">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-      <div class="modalBody">
-        <div class="panel">
-          <div class="label">Passo a Passo</div>
-          <div class="note" style="font-size: 14px; margin-top:0;">
-            <b>1.</b> Cola a tua API Key do Google Gemini nas Configurações.<br><br>
-            <b>2.</b> Clica no ícone de Imagem (canto esquerdo) e anexa uma foto do teu ambiente vazio.<br><br>
-            <b>3.</b> Escreve como desejas mobiliar ou deixa em branco para a IA decidir o melhor mobiliário.<br><br>
-            <b>4.</b> Clica em "Gerar Prompt".<br><br>
-            <b>5.</b> A IA vai analisar a arquitetura da tua foto e dar-te um código de texto profissional. Basta copiar esse texto e colar no teu gerador de imagem preferido (Midjourney, Bing, etc)!
-          </div>
+          <div class="label">API Key do Google Gemini</div>
+          <input type="password" id="apiKey" placeholder="Cole aqui a sua chave...">
+          <button class="btnAccent" style="width:100%; height:44px; border-radius:12px; border:none; cursor:pointer;" id="saveKey">Guardar Chave</button>
         </div>
       </div>
     </div>
@@ -460,32 +333,21 @@
   <div class="overlay" id="ovUploads">
     <div class="modal">
       <div class="modalHead">
-        <div class="modalTitle">Imagens para Análise</div>
-        <button class="closeBtn closeUploadsBtn">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
+        <b>Imagens do Ambiente</b>
+        <button class="closeBtn" onclick="closeModal('ovUploads')"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modalBody">
         <div class="uploadGrid">
           <div class="slot" id="slotBase">
-            <div class="slotTitle">1. Foto do Ambiente</div>
-            <div class="slotSub">A IA vai ler as paredes e portas para montar o prompt.</div>
+            <b>1. Foto Base</b>
             <div class="preview" id="prevBase"></div>
-            <div class="slotFoot">
-              <div class="fileName" id="nameBase">Nenhum</div>
-              <button class="miniBtn" id="rmBase">Eliminar</button>
-            </div>
+            <button class="miniBtn" id="rmBase" style="border:none; background:none; color:red; cursor:pointer;">Limpar</button>
             <input type="file" id="fileBase" accept="image/*" hidden>
           </div>
-
           <div class="slot" id="slotFix">
-            <div class="slotTitle">2. Correção de Erro</div>
-            <div class="slotSub">Opcional. Foca-te no erro que desejas corrigir.</div>
+            <b>2. Close-up (Opcional)</b>
             <div class="preview" id="prevFix"></div>
-            <div class="slotFoot">
-              <div class="fileName" id="nameFix">Nenhum</div>
-              <button class="miniBtn" id="rmFix">Eliminar</button>
-            </div>
+            <button class="miniBtn" id="rmFix" style="border:none; background:none; color:red; cursor:pointer;">Limpar</button>
             <input type="file" id="fileFix" accept="image/*" hidden>
           </div>
         </div>
@@ -496,290 +358,136 @@
   <div class="overlay" id="ovPrompt">
     <div class="modal">
       <div class="modalHead">
-        <div class="modalTitle">Prompt de Staging Visual</div>
-        <div style="display:flex; gap:10px;">
-          <button class="btn btnAccent" id="copyPrompt"><i class="fa-solid fa-copy"></i> Copiar Prompt</button>
-          <button class="closeBtn closePromptBtn">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
+        <b>Prompt de Staging Gerado</b>
+        <button class="closeBtn" onclick="closeModal('ovPrompt')"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modalBody">
-        <pre id="promptUsed"></pre>
+        <pre id="promptResult"></pre>
+        <button class="ctaBtn" style="width:100%; margin-top:20px;" id="copyBtn">Copiar Prompt</button>
       </div>
     </div>
   </div>
 
   <script>
-    // ==========================================
-    // SEU LINK DEFINITIVO DO COFRE (VERSÃO 10)
-    // ==========================================
+    // URL ATUALIZADA (VERSÃO 10)
     const COFRE_URL = "https://script.google.com/macros/s/AKfycbyJlE1l1N6nueqoqy1vZCyVdVNEB_74IsCz-vOOY_G-4JDwMlq3OReQvVAjHNBjTWY/exec";
-    const LS_KEY = "afrodite_key";
-
-    const state = {
-      format: "16:9",
-      style: "AUTO",
-      autoPrompt: true,
-      images: { base: null, error: null }
-    };
-
-    const $ = (id) => document.getElementById(id);
-
-    let toastTimer = null;
-    function toast(msg){
-      $("toastText").textContent = msg;
-      $("toast").classList.add("show");
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(()=> $("toast").classList.remove("show"), 2500);
-    }
-
-    function openModal(id){ $(id).classList.add("show"); }
-    function closeModal(id){ $(id).classList.remove("show"); }
     
-    // Fechar clicando fora
-    ["ovConfig","ovHelp","ovUploads","ovPrompt"].forEach(id => {
-      $(id).addEventListener("mousedown", (e) => { if(e.target === $(id)) closeModal(id); });
-    });
+    const state = { format: "16:9", style: "AUTO", autoPrompt: true, base: null, fix: null };
+    const $ = id => document.getElementById(id);
 
-    // Abrir Modais
-    $("btnConfig").addEventListener("click", ()=> openModal("ovConfig"));
-    $("btnHelp").addEventListener("click", ()=> openModal("ovHelp"));
-    $("btnUploads").addEventListener("click", ()=> openModal("ovUploads"));
-    
-    // Fechar Modais (Botões X com SVG garantido)
-    document.querySelectorAll(".closeConfigBtn").forEach(btn => btn.addEventListener("click", ()=> closeModal("ovConfig")));
-    document.querySelectorAll(".closeHelpBtn").forEach(btn => btn.addEventListener("click", ()=> closeModal("ovHelp")));
-    document.querySelectorAll(".closeUploadsBtn").forEach(btn => btn.addEventListener("click", ()=> closeModal("ovUploads")));
-    document.querySelectorAll(".closePromptBtn").forEach(btn => btn.addEventListener("click", ()=> closeModal("ovPrompt")));
+    function openModal(id) { $(id).classList.add('show'); }
+    function closeModal(id) { $(id).classList.remove('show'); }
 
-    $("btnSupport").addEventListener("click", ()=> toast("Suporte via E-mail: suporte@seuapp.com"));
-
-    $("getKey").addEventListener("click", ()=> window.open("https://aistudio.google.com/app/apikey", "_blank"));
-    $("saveKey").addEventListener("click", ()=>{
-      const k = ($("apiKey").value || "").trim();
-      if(!k) return toast("Cola a tua API key.");
-      localStorage.setItem(LS_KEY, k);
-      $("keyHint").textContent = "Chave ligada perfeitamente.";
-      toast("Chave guardada com segurança.");
-      updateRunEnabled();
-    });
-
-    const popovers = ["popFormat","popStyle"];
-    function closeAllPops(){ popovers.forEach(id => $(id).classList.remove("show")); }
-    document.addEventListener("mousedown", (e)=>{
-      if(!e.target.closest('.popWrap')) closeAllPops();
-    });
-    $("dock").addEventListener("mousedown", (e)=> e.stopPropagation());
-    
-    document.querySelectorAll(".popTrigger").forEach(btn=>{
-      btn.addEventListener("mousedown",(e)=>{
+    // Toggle Popovers
+    document.querySelectorAll('.popTrigger').forEach(btn => {
+      btn.onclick = (e) => {
         e.stopPropagation();
         const popId = btn.dataset.pop;
-        const isShown = $(popId).classList.contains("show");
-        closeAllPops();
-        if(!isShown) $(popId).classList.add("show");
+        const wasShown = $(popId).classList.contains('show');
+        document.querySelectorAll('.pop').forEach(p => p.classList.remove('show'));
+        if(!wasShown) $(popId).classList.add('show');
+      }
+    });
+    document.onclick = () => document.querySelectorAll('.pop').forEach(p => p.classList.remove('show'));
+
+    // Config Key
+    $('btnConfig').onclick = () => openModal('ovConfig');
+    $('saveKey').onclick = () => {
+      localStorage.setItem('afrodite_key', $('apiKey').value);
+      alert('Chave guardada!');
+      updateRun();
+    };
+
+    // Uploads
+    $('btnUploads').onclick = () => openModal('ovUploads');
+    $('slotBase').onclick = () => $('fileBase').click();
+    $('slotFix').onclick = () => $('fileFix').click();
+
+    async function processImg(file, size) {
+      return new Promise(res => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const scale = Math.min(size / img.width, size / img.height, 1);
+            canvas.width = img.width * scale; canvas.height = img.height * scale;
+            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+            res(canvas.toDataURL('image/jpeg', 0.8));
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
       });
-    });
+    }
 
-    // FORMAT
-    $("formatChoices").addEventListener("mousedown",(e)=>{
-      const b = e.target.closest("[data-format]");
-      if(!b) return;
-      document.querySelectorAll("#formatChoices .tile").forEach(x=>x.classList.remove("active"));
-      b.classList.add("active");
-      state.format = b.dataset.format;
-      $("formatLabel").textContent = state.format;
-      closeAllPops();
-    });
+    $('fileBase').onchange = async e => {
+      state.base = await processImg(e.target.files[0], 1200);
+      $('prevBase').style.backgroundImage = `url(${state.base})`;
+      updateRun();
+    };
 
-    // STYLE
-    $("styleChoices").addEventListener("mousedown",(e)=>{
-      const b = e.target.closest("[data-style]");
-      if(!b) return;
-      document.querySelectorAll("#styleChoices .listItem").forEach(x=>x.classList.remove("active"));
-      b.classList.add("active");
-      state.style = b.dataset.style;
-      $("styleLabel").textContent = state.style === "AUTO" ? "AUTO" : state.style;
-      closeAllPops();
-    });
-
-    // AUTO-PROMPT (T)
-    $("btnAuto").addEventListener("click",(e)=>{
-      e.stopPropagation();
+    $('btnAuto').onclick = () => {
       state.autoPrompt = !state.autoPrompt;
-      if(state.autoPrompt){
-        $("btnAuto").classList.add("active");
-        $("btnAuto").querySelector('.tip').textContent = "Lapidar Prompt (Ativo)";
-      } else {
-        $("btnAuto").classList.remove("active");
-        $("btnAuto").querySelector('.tip').textContent = "Prompt Literal (Desativado)";
-      }
-      toast(state.autoPrompt ? "Inteligência Ativada" : "Modo Literal Ativado");
+      $('btnAuto').classList.toggle('active');
+    };
+
+    // Popover Selections
+    document.querySelectorAll('[data-format]').forEach(b => b.onclick = () => {
+        state.format = b.dataset.format; $('formatLabel').innerText = state.format;
+        document.querySelectorAll('[data-format]').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
     });
 
-    // IMAGE COMPRESSION
-    async function compressToDataURL(file, maxSide, quality){
-      const img = await loadImage(file);
-      const { w, h } = fitSize(img.width, img.height, maxSide);
-      const canvas = document.createElement("canvas");
-      canvas.width = w; canvas.height = h;
-      const ctx = canvas.getContext("2d", { alpha: false });
-      ctx.drawImage(img, 0, 0, w, h);
-      return canvas.toDataURL("image/jpeg", quality);
-    }
-    function fitSize(width, height, maxSide){
-      const maxDim = Math.max(width, height);
-      if(maxDim <= maxSide) return { w: width, h: height };
-      const scale = maxSide / maxDim;
-      return { w: Math.round(width * scale), h: Math.round(height * scale) };
-    }
-    function loadImage(file){
-      return new Promise((resolve, reject)=>{
-        const url = URL.createObjectURL(file);
-        const img = new Image();
-        img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
-        img.onerror = reject;
-        img.src = url;
-      });
-    }
-
-    // UPLOADS HANDLER
-    function setPreview(kind, dataUrl, filename){
-      if(kind === "base"){
-        $("prevBase").style.backgroundImage = dataUrl ? `url('${dataUrl}')` : "";
-        $("nameBase").textContent = filename || "Nenhum";
-      } else {
-        $("prevFix").style.backgroundImage = dataUrl ? `url('${dataUrl}')` : "";
-        $("nameFix").textContent = filename || "Nenhum";
-      }
-    }
-    function clearSlot(kind){
-      state.images[kind === "base" ? "base" : "error"] = null;
-      setPreview(kind, null, "Nenhum");
-      $(kind === "base" ? "fileBase" : "fileFix").value = "";
-      updateRunEnabled();
-    }
-    $("rmBase").addEventListener("click",(e)=>{ e.stopPropagation(); clearSlot("base"); });
-    $("rmFix").addEventListener("click",(e)=>{ e.stopPropagation(); clearSlot("error"); });
-    $("slotBase").addEventListener("click", ()=> $("fileBase").click());
-    $("slotFix").addEventListener("click", ()=> $("fileFix").click());
-
-    $("fileBase").addEventListener("change", async (e)=>{
-      const f = e.target.files && e.target.files[0];
-      if(!f) return;
-      toast("A ler arquitetura...");
-      const dataUrl = await compressToDataURL(f, 1500, 0.8);
-      state.images.base = dataUrl;
-      setPreview("base", dataUrl, f.name);
-      toast("Foto carregada.");
-      updateRunEnabled();
-    });
-    $("fileFix").addEventListener("change", async (e)=>{
-      const f = e.target.files && e.target.files[0];
-      if(!f) return;
-      toast("A analisar erro...");
-      const dataUrl = await compressToDataURL(f, 1200, 0.8);
-      state.images.error = dataUrl;
-      setPreview("error", dataUrl, f.name);
-      toast("Correção registada.");
-      updateRunEnabled();
+    document.querySelectorAll('[data-style]').forEach(b => b.onclick = () => {
+        state.style = b.dataset.style; $('styleLabel').innerText = state.style;
+        document.querySelectorAll('[data-style]').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
     });
 
-    $("copyPrompt").addEventListener("click", async ()=>{
-      const txt = $("promptUsed").textContent || "";
-      if(!txt) return toast("Nada para copiar.");
-      await navigator.clipboard.writeText(txt);
-      toast("Copiado com sucesso!");
-    });
-
-    function setStatus(text, color=""){
-      $("statusText").textContent = text;
-      $("pillStatus").style.color = color || "rgba(255,255,255,0.7)";
-      $("pillStatus").querySelector('i').style.color = color || "var(--accent)";
+    function updateRun() {
+      const key = localStorage.getItem('afrodite_key');
+      $('btnRun').disabled = !(state.base && key);
+      $('statusText').innerText = state.base ? "Pronto para Gerar" : "Aguardando Foto...";
     }
 
-    function hasKey(){
-      const k = localStorage.getItem(LS_KEY);
-      return k && k.trim().length > 10;
-    }
-
-    function updateRunEnabled(){
-      const prompt = ($("userPrompt").value || "").trim();
-      const okInput = !!state.images.base || prompt.length > 0;
-      const okKey = hasKey();
+    // EXECUÇÃO
+    $('btnRun').onclick = async () => {
+      $('btnRun').disabled = true;
+      $('statusText').innerText = "A analisar ambiente...";
       
-      $("btnRun").disabled = !(okInput && okKey);
-
-      if(!okKey) setStatus("Autenticação Necessária (Chave API)");
-      else if(!okInput) setStatus("Envia a foto do ambiente ou digita algo");
-      else setStatus("Motor Pronto para Gerar","#4ade80");
-    }
-
-    $("userPrompt").addEventListener("input", updateRunEnabled);
-
-    $("btnRun").addEventListener("click", async ()=>{
-      const apiKey = localStorage.getItem(LS_KEY);
-      const prompt = ($("userPrompt").value || "");
-
       const payload = {
-        cmd: "[AFRODITE-RUNTIME]",
-        key: apiKey,
-        configs: {
-          melhorar_prompt: state.autoPrompt,
-          estilo: state.style,
-          formato: state.format,
-          prompt_usuario: prompt
-        },
-        images: {
-          base: state.images.base || null,
-          error: state.images.error || null
-        }
+        key: localStorage.getItem('afrodite_key'),
+        configs: { melhorar_prompt: state.autoPrompt, estilo: state.style, formato: state.format, prompt_usuario: $('userPrompt').value },
+        images: { base: state.base, error: state.fix }
       };
 
-      $("btnRun").disabled = true;
-      setStatus("A Analisar Foto...", "#FFD92A");
-      toast("A IA está a fazer a leitura do espaço...");
-
-      try{
-        const res = await fetch(COFRE_URL, {
-          method: "POST",
-          redirect: "follow",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
-        });
-
+      try {
+        const res = await fetch(COFRE_URL, { method: 'POST', body: JSON.stringify(payload) });
         const data = await res.json();
-
-        if(data.status !== "success"){
-          console.error(data);
-          toast("Erro: " + (data.message || "Falha na análise"));
-          setStatus("Erro de Conexão", "#ff5555");
-          updateRunEnabled();
-          return;
+        if(data.status === 'success') {
+          $('promptResult').innerText = data.prompt_used;
+          openModal('ovPrompt');
+        } else {
+          alert("Erro: " + data.message);
         }
-
-        if(data.prompt_used){
-          $("promptUsed").textContent = data.prompt_used;
-          openModal("ovPrompt");
-          toast("Prompt Técnico Gerado com Sucesso!");
-        }
-        
-        setStatus("Análise Finalizada", "#4ade80");
-      }catch(err){
-        console.error(err);
-        toast("Falha na comunicação com o servidor.");
-        setStatus("Falha de Comunicação", "#ff5555");
-      }finally{
-        setTimeout(updateRunEnabled, 2500);
+      } catch (e) {
+        alert("Falha de conexão com a IA.");
+      } finally {
+        updateRun();
       }
-    });
+    };
 
-    window.addEventListener("load", ()=>{
-      const k = localStorage.getItem(LS_KEY) || "";
-      if(k) $("apiKey").value = k;
-      updateRunEnabled();
-    });
+    $('copyBtn').onclick = () => {
+      navigator.clipboard.writeText($('promptResult').innerText);
+      alert('Prompt copiado!');
+    };
+
+    window.onload = () => {
+        const k = localStorage.getItem('afrodite_key');
+        if(k) $('apiKey').value = k;
+        updateRun();
+    };
   </script>
 </body>
 </html>
