@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mobiliando com IA</title>
+  <title>Mobiliando com IA - Engenharia de Prompts</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -74,54 +74,20 @@
     }
     .topBtn:hover{ background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.15); }
 
-    /* MAIN / MURAL */
+    /* MAIN BACKGROUND (Apenas textura ou vazio) */
     .main{
       position: absolute;
       top: 64px; left:0; right:0; bottom:0;
-      overflow: hidden;
-    }
-    .galleryWrap{
-      position:absolute;
-      inset: 0;
-      overflow: auto;
-      padding: 24px 24px 200px 24px;
-    }
-    .gallery{
-      display:grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    .imgCard{
-      position:relative;
-      border-radius: 20px;
-      overflow:hidden;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.05);
-      aspect-ratio: 4/5;
       display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      opacity: 0.2;
     }
-    .imgCard img{
-      width: 100%;
-      height: 100%;
-      display:block;
-      object-fit: cover;
-    }
-    .imgMeta{
-      position:absolute;
-      left: 12px; right: 12px; bottom: 12px;
-      display:flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .tag{
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 600;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.9);
+    .main h1 {
+        font-size: 3rem;
+        text-align: center;
+        margin: 0;
     }
 
     /* DOCK ROOT */
@@ -193,15 +159,16 @@
     .tBtn.active{ background: rgba(255,255,255,0.15); box-shadow: 0 0 0 1px var(--accent) inset; color: var(--accent);}
 
     .ctaBtn{
-      width: 48px; height: 48px;
-      border-radius: 50%; border:none;
+      height: 48px;
+      padding: 0 24px;
+      border-radius: 999px; border:none;
       background: var(--accent); color: #000;
-      font-size: 18px; cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
+      font-size: 15px; font-weight: 800; cursor:pointer;
+      display:flex; align-items:center; justify-content:center; gap: 8px;
       transition: transform 0.1s, opacity 0.2s;
       box-shadow: 0 8px 20px rgba(255,217,42,0.3);
     }
-    .ctaBtn:active{ transform: scale(0.92); }
+    .ctaBtn:active{ transform: scale(0.95); }
     .ctaBtn:disabled{ opacity: 0.3; cursor: not-allowed; transform: none; box-shadow:none;}
 
     .dockBody{ padding: 18px 0; }
@@ -244,16 +211,6 @@
 
     .popSec{ padding: 20px; display:flex; flex-direction:column; gap: 14px; }
     .popTitle{ font-weight: 800; font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px;}
-
-    .rowBtns{ display:flex; gap: 8px; flex-wrap: wrap; }
-    .opt{
-      height: 38px; padding: 0 16px; border-radius: 999px;
-      border: 1px solid transparent; background: rgba(255,255,255,0.05);
-      color: rgba(255,255,255,0.8); cursor:pointer; font-size: 13px; font-weight: 500;
-      transition: all 0.2s;
-    }
-    .opt:hover{ background: rgba(255,255,255,0.1); }
-    .opt.active{ background: #fff; color: #000; font-weight: 700; }
 
     .grid3{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .tile{
@@ -364,7 +321,7 @@
 
     pre{
       margin:0; white-space: pre-wrap; word-break: break-word;
-      font-family: ui-monospace, monospace; font-size: 13px; line-height: 1.6;
+      font-family: ui-monospace, monospace; font-size: 14px; line-height: 1.6;
       color: rgba(255,255,255,0.9); background: rgba(0,0,0,0.5);
       padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);
     }
@@ -382,22 +339,20 @@
   <header class="topbar">
     <div class="brand">
       <span class="brandDot"></span>
-      <span>Mobiliando com IA</span>
+      <span>Engenharia de Prompt para Staging</span>
     </div>
     <div class="topActions">
       <button class="topBtn" id="btnConfig"><i class="fa-solid fa-gear" style="margin-right:6px;"></i> Configurações</button>
       <button class="topBtn" id="btnHelp">Ajuda</button>
       <button class="topBtn" id="btnSupport">Suporte</button>
-      <button class="topBtn" id="btnProducts">Outros produtos</button>
     </div>
   </header>
 
   <div class="toast" id="toast"><i class="fa-solid fa-circle-info"></i><span id="toastText"></span></div>
 
   <main class="main">
-    <div class="galleryWrap" id="galleryWrap">
-      <div class="gallery" id="gallery"></div>
-    </div>
+    <h1><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--accent);"></i></h1>
+    <p style="margin-top:10px; color:rgba(255,255,255,0.5); font-weight:500;">O Motor Analítico está Pronto</p>
   </main>
 
   <div class="dockRoot">
@@ -405,42 +360,29 @@
       <div class="dockTop">
         <div class="dockLeft">
           <button class="iconBtn" id="btnUploads" title="Anexar Imagens"><i class="fa-solid fa-image"></i></button>
-          <div class="pillMuted" id="pillStatus"><i class="fa-solid fa-bolt" style="color:var(--accent);"></i><span id="statusText">Aguardando...</span></div>
+          <div class="pillMuted" id="pillStatus"><i class="fa-solid fa-bolt" style="color:var(--accent);"></i><span id="statusText">Aguardando Foto...</span></div>
         </div>
         <div class="dockRight">
           <button class="iconBtn tBtn active" id="btnAuto">
             <i class="fa-solid fa-wand-magic-sparkles"></i>
-            <span class="tip">Auto-Prompt Ativo</span>
+            <span class="tip">Lapidar Prompt (Ativo)</span>
           </button>
-          <button class="ctaBtn" id="btnRun" disabled title="Executar">
-            <i class="fa-solid fa-paper-plane"></i>
+          <button class="ctaBtn" id="btnRun" disabled title="Gerar Prompt">
+            Gerar Prompt <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>
       </div>
 
       <div class="dockBody">
-        <textarea class="prompt" id="userPrompt" rows="2" placeholder="Descreva como mobiliar (ou aponte o erro para corrigir)..."></textarea>
+        <textarea class="prompt" id="userPrompt" rows="2" placeholder="Descreve como mobiliar (ex: adicionar sofá de linho branco e mesa de centro rústica)..."></textarea>
       </div>
 
       <div class="dockBottom">
         <div class="popWrap">
-          <button class="chip popTrigger" data-pop="popMode"><i class="fa-solid fa-layer-group" style="opacity:0.5"></i> <span id="modeLabel">Gerar Imagem</span></button>
-          <div class="pop" id="popMode">
-            <div class="popSec">
-              <div class="popTitle">Modo de Operação</div>
-              <div class="rowBtns" id="modeChoices">
-                <button class="opt active" data-mode="image">Gerar Imagem</button>
-                <button class="opt" data-mode="prompt">Só Prompt</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="popWrap">
           <button class="chip popTrigger" data-pop="popFormat"><i class="fa-solid fa-crop-simple" style="opacity:0.5"></i> <span id="formatLabel">16:9</span></button>
           <div class="pop" id="popFormat">
             <div class="popSec">
-              <div class="popTitle">Aspect Ratio</div>
+              <div class="popTitle">Aspect Ratio (Para o Prompt)</div>
               <div class="grid3" id="formatChoices">
                 <button class="tile active" data-format="16:9">16:9</button>
                 <button class="tile" data-format="9:16">9:16</button>
@@ -482,11 +424,11 @@
         <div class="panel">
           <div class="label">Google Gemini API Key</div>
           <div class="inputRow">
-            <input type="password" id="apiKey" placeholder="Cole sua API Key aqui..." />
-            <button class="btn btnAccent" id="saveKey">Salvar</button>
-            <button class="btn btnMuted" id="getKey">Obter Chave</button>
+            <input type="password" id="apiKey" placeholder="Cola a tua API Key aqui..." />
+            <button class="btn btnAccent" id="saveKey">Guardar</button>
+            <button class="btn btnMuted" id="getKey">Obter Chave (Grátis)</button>
           </div>
-          <div class="note" id="keyHint">Sua chave é armazenada de forma segura e local no seu navegador. Nenhuma taxa de servidor é cobrada.</div>
+          <div class="note" id="keyHint">A leitura de imagens e engenharia de prompt não consome a cota paga da API. É 100% gratuito.</div>
         </div>
       </div>
     </div>
@@ -495,7 +437,7 @@
   <div class="overlay" id="ovHelp">
     <div class="modal">
       <div class="modalHead">
-        <div class="modalTitle">Como Usar</div>
+        <div class="modalTitle">Como Usar o Engenheiro</div>
         <button class="closeBtn closeHelpBtn">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
@@ -504,11 +446,11 @@
         <div class="panel">
           <div class="label">Passo a Passo</div>
           <div class="note" style="font-size: 14px; margin-top:0;">
-            <b>1.</b> Cole a sua API Key do Google Gemini nas Configurações.<br><br>
-            <b>2.</b> Clique no ícone de Imagem (canto esquerdo) e anexe uma foto de um ambiente vazio.<br><br>
-            <b>3.</b> Escreva como deseja mobiliar ou deixe em branco para a IA criar sozinha.<br><br>
-            <b>4.</b> Escolha o Formato e Estilo nos botões inferiores.<br><br>
-            <b>5.</b> Clique no botão Amarelo (Avião de Papel) para Executar.
+            <b>1.</b> Cola a tua API Key do Google Gemini nas Configurações.<br><br>
+            <b>2.</b> Clica no ícone de Imagem (canto esquerdo) e anexa uma foto do teu ambiente vazio.<br><br>
+            <b>3.</b> Escreve como desejas mobiliar ou deixa em branco para a IA decidir o melhor mobiliário.<br><br>
+            <b>4.</b> Clica em "Gerar Prompt".<br><br>
+            <b>5.</b> A IA vai analisar a arquitetura da tua foto e dar-te um código de texto profissional. Basta copiar esse texto e colar no teu gerador de imagem preferido (Midjourney, Bing, etc)!
           </div>
         </div>
       </div>
@@ -518,7 +460,7 @@
   <div class="overlay" id="ovUploads">
     <div class="modal">
       <div class="modalHead">
-        <div class="modalTitle">Anexar Imagens</div>
+        <div class="modalTitle">Imagens para Análise</div>
         <button class="closeBtn closeUploadsBtn">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
@@ -526,28 +468,27 @@
       <div class="modalBody">
         <div class="uploadGrid">
           <div class="slot" id="slotBase">
-            <div class="slotTitle">1. Ambiente Vazio</div>
-            <div class="slotSub">Verdade arquitetônica (Prioridade)</div>
+            <div class="slotTitle">1. Foto do Ambiente</div>
+            <div class="slotSub">A IA vai ler as paredes e portas para montar o prompt.</div>
             <div class="preview" id="prevBase"></div>
             <div class="slotFoot">
               <div class="fileName" id="nameBase">Nenhum</div>
-              <button class="miniBtn" id="rmBase">Excluir</button>
+              <button class="miniBtn" id="rmBase">Eliminar</button>
             </div>
             <input type="file" id="fileBase" accept="image/*" hidden>
           </div>
 
           <div class="slot" id="slotFix">
             <div class="slotTitle">2. Correção de Erro</div>
-            <div class="slotSub">Opcional. Close-up para IA arrumar.</div>
+            <div class="slotSub">Opcional. Foca-te no erro que desejas corrigir.</div>
             <div class="preview" id="prevFix"></div>
             <div class="slotFoot">
               <div class="fileName" id="nameFix">Nenhum</div>
-              <button class="miniBtn" id="rmFix">Excluir</button>
+              <button class="miniBtn" id="rmFix">Eliminar</button>
             </div>
             <input type="file" id="fileFix" accept="image/*" hidden>
           </div>
         </div>
-        <div class="note"><i class="fa-solid fa-compress" style="margin-right:6px;"></i>Imagens são otimizadas automaticamente no seu dispositivo para não travar a API.</div>
       </div>
     </div>
   </div>
@@ -555,9 +496,9 @@
   <div class="overlay" id="ovPrompt">
     <div class="modal">
       <div class="modalHead">
-        <div class="modalTitle">Engenharia de Prompt</div>
+        <div class="modalTitle">Prompt de Staging Visual</div>
         <div style="display:flex; gap:10px;">
-          <button class="btn btnMuted" id="copyPrompt"><i class="fa-solid fa-copy"></i> Copiar</button>
+          <button class="btn btnAccent" id="copyPrompt"><i class="fa-solid fa-copy"></i> Copiar Prompt</button>
           <button class="closeBtn closePromptBtn">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -571,13 +512,12 @@
 
   <script>
     // ==========================================
-    // SEU LINK (VERSÃO 8)
+    // SEU LINK DEFINITIVO DO COFRE (VERSÃO 10)
     // ==========================================
-    const COFRE_URL = "https://script.google.com/macros/s/AKfycbzqmbN-rqflKXYOS2WuNClRArBdz8EQ8SZYCue-eA3Wuh8zHYCiBhyqy7twv7UMKyfN/exec";
+    const COFRE_URL = "https://script.google.com/macros/s/AKfycbyJlE1l1N6nueqoqy1vZCyVdVNEB_74IsCz-vOOY_G-4JDwMlq3OReQvVAjHNBjTWY/exec";
     const LS_KEY = "afrodite_key";
 
     const state = {
-      mode: "image",
       format: "16:9",
       style: "AUTO",
       autoPrompt: true,
@@ -614,19 +554,18 @@
     document.querySelectorAll(".closePromptBtn").forEach(btn => btn.addEventListener("click", ()=> closeModal("ovPrompt")));
 
     $("btnSupport").addEventListener("click", ()=> toast("Suporte via E-mail: suporte@seuapp.com"));
-    $("btnProducts").addEventListener("click", ()=> toast("Em breve novos lançamentos."));
 
     $("getKey").addEventListener("click", ()=> window.open("https://aistudio.google.com/app/apikey", "_blank"));
     $("saveKey").addEventListener("click", ()=>{
       const k = ($("apiKey").value || "").trim();
-      if(!k) return toast("Cole a API key.");
+      if(!k) return toast("Cola a tua API key.");
       localStorage.setItem(LS_KEY, k);
-      $("keyHint").textContent = "Chave conectada perfeitamente.";
-      toast("Chave salva com segurança.");
+      $("keyHint").textContent = "Chave ligada perfeitamente.";
+      toast("Chave guardada com segurança.");
       updateRunEnabled();
     });
 
-    const popovers = ["popMode","popFormat","popStyle"];
+    const popovers = ["popFormat","popStyle"];
     function closeAllPops(){ popovers.forEach(id => $(id).classList.remove("show")); }
     document.addEventListener("mousedown", (e)=>{
       if(!e.target.closest('.popWrap')) closeAllPops();
@@ -641,17 +580,6 @@
         closeAllPops();
         if(!isShown) $(popId).classList.add("show");
       });
-    });
-
-    // MODE
-    $("modeChoices").addEventListener("mousedown",(e)=>{
-      const b = e.target.closest("[data-mode]");
-      if(!b) return;
-      document.querySelectorAll("#modeChoices .opt").forEach(x=>x.classList.remove("active"));
-      b.classList.add("active");
-      state.mode = b.dataset.mode;
-      $("modeLabel").textContent = state.mode === "image" ? "Gerar Imagem" : "Só Prompt";
-      closeAllPops(); updateRunEnabled();
     });
 
     // FORMAT
@@ -682,7 +610,7 @@
       state.autoPrompt = !state.autoPrompt;
       if(state.autoPrompt){
         $("btnAuto").classList.add("active");
-        $("btnAuto").querySelector('.tip').textContent = "Auto-Prompt Ativo";
+        $("btnAuto").querySelector('.tip').textContent = "Lapidar Prompt (Ativo)";
       } else {
         $("btnAuto").classList.remove("active");
         $("btnAuto").querySelector('.tip').textContent = "Prompt Literal (Desativado)";
@@ -740,21 +668,21 @@
     $("fileBase").addEventListener("change", async (e)=>{
       const f = e.target.files && e.target.files[0];
       if(!f) return;
-      toast("Processando arquitetura...");
-      const dataUrl = await compressToDataURL(f, 2048, 0.85);
+      toast("A ler arquitetura...");
+      const dataUrl = await compressToDataURL(f, 1500, 0.8);
       state.images.base = dataUrl;
       setPreview("base", dataUrl, f.name);
-      toast("Base carregada.");
+      toast("Foto carregada.");
       updateRunEnabled();
     });
     $("fileFix").addEventListener("change", async (e)=>{
       const f = e.target.files && e.target.files[0];
       if(!f) return;
-      toast("Analisando erro...");
-      const dataUrl = await compressToDataURL(f, 1600, 0.85);
+      toast("A analisar erro...");
+      const dataUrl = await compressToDataURL(f, 1200, 0.8);
       state.images.error = dataUrl;
       setPreview("error", dataUrl, f.name);
-      toast("Correção registrada.");
+      toast("Correção registada.");
       updateRunEnabled();
     });
 
@@ -764,24 +692,6 @@
       await navigator.clipboard.writeText(txt);
       toast("Copiado com sucesso!");
     });
-
-    function addToGallery(dataUrl, tags){
-      const card = document.createElement("div");
-      card.className = "imgCard";
-      const img = document.createElement("img");
-      img.src = dataUrl;
-      card.appendChild(img);
-      const meta = document.createElement("div");
-      meta.className = "imgMeta";
-      tags.forEach(t=>{
-        if(!t) return;
-        const s = document.createElement("span");
-        s.className = "tag"; s.textContent = t;
-        meta.appendChild(s);
-      });
-      card.appendChild(meta);
-      $("gallery").prepend(card);
-    }
 
     function setStatus(text, color=""){
       $("statusText").textContent = text;
@@ -801,9 +711,9 @@
       
       $("btnRun").disabled = !(okInput && okKey);
 
-      if(!okKey) setStatus("Autenticação Necessária (API Key)");
-      else if(!okInput) setStatus("Envie uma foto ou digite um comando");
-      else setStatus("Pronto para Executar","#4ade80");
+      if(!okKey) setStatus("Autenticação Necessária (Chave API)");
+      else if(!okInput) setStatus("Envia a foto do ambiente ou digita algo");
+      else setStatus("Motor Pronto para Gerar","#4ade80");
     }
 
     $("userPrompt").addEventListener("input", updateRunEnabled);
@@ -816,7 +726,6 @@
         cmd: "[AFRODITE-RUNTIME]",
         key: apiKey,
         configs: {
-          gerar_imagem: (state.mode === "image"),
           melhorar_prompt: state.autoPrompt,
           estilo: state.style,
           formato: state.format,
@@ -829,8 +738,8 @@
       };
 
       $("btnRun").disabled = true;
-      setStatus("Processando...", "#FFD92A");
-      toast("Trabalhando na requisição...");
+      setStatus("A Analisar Foto...", "#FFD92A");
+      toast("A IA está a fazer a leitura do espaço...");
 
       try{
         const res = await fetch(COFRE_URL, {
@@ -844,36 +753,22 @@
 
         if(data.status !== "success"){
           console.error(data);
-          toast("Erro: Verifique sua cota da API");
-          setStatus("Erro na API", "#ff5555");
+          toast("Erro: " + (data.message || "Falha na análise"));
+          setStatus("Erro de Conexão", "#ff5555");
           updateRunEnabled();
           return;
         }
 
         if(data.prompt_used){
           $("promptUsed").textContent = data.prompt_used;
-        }
-
-        if(data.mode === "image" && data.image && data.image.data){
-          const mime = data.image.mime_type || "image/jpeg";
-          const url = `data:${mime};base64,${data.image.data}`;
-          addToGallery(url, [
-            state.format,
-            state.style === "AUTO" ? "Estilo IA" : state.style,
-            state.images.error ? "Correção" : "Staging"
-          ]);
-          toast("Imagem gerada e renderizada!");
-        }
-
-        if(data.mode === "prompt"){
           openModal("ovPrompt");
-          toast("Engenharia de Prompt concluída.");
+          toast("Prompt Técnico Gerado com Sucesso!");
         }
         
-        setStatus("Finalizado com sucesso", "#4ade80");
+        setStatus("Análise Finalizada", "#4ade80");
       }catch(err){
         console.error(err);
-        toast("Erro de conexão com o Cofre.");
+        toast("Falha na comunicação com o servidor.");
         setStatus("Falha de Comunicação", "#ff5555");
       }finally{
         setTimeout(updateRunEnabled, 2500);
