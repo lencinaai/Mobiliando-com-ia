@@ -275,9 +275,9 @@
 
   <script>
     // =========================================================================
-    // COLE A SUA NOVA URL AQUI
+    // SEU LINK JÁ INJETADO AQUI! (O mesmo da versão 10, que atualizou pra 11)
     // =========================================================================
-    const COFRE_URL = "COLE_AQUI_A_SUA_URL_DA_NOVA_VERSAO";
+    const COFRE_URL = "https://script.google.com/macros/s/AKfycbyJlE1l1N6nueqoqy1vZCyVdVNEB_74IsCz-vOOY_G-4JDwMlq3OReQvVAjHNBjTWY/exec";
     
     const state = { format: "16:9", style: "AUTO", autoPrompt: true, base: null };
     const $ = id => document.getElementById(id);
@@ -327,7 +327,7 @@
     }
 
     $('fileBase').onchange = async e => {
-      state.base = await processImg(e.target.files[0], 1000); // Reduzido o peso para envio mais rápido
+      state.base = await processImg(e.target.files[0], 1000); 
       $('prevBase').style.backgroundImage = `url(${state.base})`;
       updateRun();
     };
