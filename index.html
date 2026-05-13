@@ -541,9 +541,9 @@
 
   <script>
     // ==========================================
-    // SEU LINK DEFINITIVO DO COFRE
+    // SEU LINK ATUALIZADO (VERSÃO 7)
     // ==========================================
-    const COFRE_URL = "https://script.google.com/macros/s/AKfycbwiKhdW1ZHKtoe-0qOOsF865hUjm90DtApmZxcFlDxSPtoyh1Fy5K10sRxURXz5HJvf/exec";
+    const COFRE_URL = "https://script.google.com/macros/s/AKfycbwGdGbFSGd4MqSqNfSgu1lQXO7epV4fHUpjGYsjXa2XALnD3qKxl67sRVuwi-smjicZ/exec";
     const LS_KEY = "afrodite_key";
 
     const state = {
@@ -685,7 +685,7 @@
       }
     }
     function clearSlot(kind){
-      state.images[kind] = null;
+      state.images[kind === "base" ? "base" : "error"] = null;
       setPreview(kind, null, "Nenhum");
       $(kind === "base" ? "fileBase" : "fileFix").value = "";
       updateRunEnabled();
@@ -757,10 +757,9 @@
       const okInput = !!state.images.base || prompt.length > 0;
       const okKey = hasKey();
       
-      $("btnRun").disabled = !(okInput && okKey && COFRE_URL.startsWith("http"));
+      $("btnRun").disabled = !(okInput && okKey);
 
-      if(COFRE_URL.includes("COLE_AQUI")) setStatus("Erro: URL do Cofre não configurada","#ff5555");
-      else if(!okKey) setStatus("Autenticação Necessária (API Key)");
+      if(!okKey) setStatus("Autenticação Necessária (API Key)");
       else if(!okInput) setStatus("Envie uma foto ou digite um comando");
       else setStatus("Pronto para Executar","#4ade80");
     }
