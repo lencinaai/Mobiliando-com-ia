@@ -309,6 +309,7 @@
     .closeBtn{
       width: 36px; height: 36px; border-radius: 50%; border: none;
       background: rgba(255,255,255,0.06); color:#fff; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
       transition: background 0.2s;
     }
     .closeBtn:hover{ background: rgba(255,255,255,0.15); }
@@ -473,7 +474,9 @@
     <div class="modal">
       <div class="modalHead">
         <div class="modalTitle">Configurações de Acesso</div>
-        <button class="closeBtn" id="closeConfig"><i class="fa-solid fa-xmark"></i></button>
+        <button class="closeBtn closeConfigBtn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
       <div class="modalBody">
         <div class="panel">
@@ -489,11 +492,36 @@
     </div>
   </div>
 
+  <div class="overlay" id="ovHelp">
+    <div class="modal">
+      <div class="modalHead">
+        <div class="modalTitle">Como Usar</div>
+        <button class="closeBtn closeHelpBtn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="modalBody">
+        <div class="panel">
+          <div class="label">Passo a Passo</div>
+          <div class="note" style="font-size: 14px; margin-top:0;">
+            <b>1.</b> Cole a sua API Key do Google Gemini nas Configurações.<br><br>
+            <b>2.</b> Clique no ícone de Imagem (canto esquerdo) e anexe uma foto de um ambiente vazio.<br><br>
+            <b>3.</b> Escreva como deseja mobiliar ou deixe em branco para a IA criar sozinha.<br><br>
+            <b>4.</b> Escolha o Formato e Estilo nos botões inferiores.<br><br>
+            <b>5.</b> Clique no botão Amarelo (Avião de Papel) para Executar.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="overlay" id="ovUploads">
     <div class="modal">
       <div class="modalHead">
         <div class="modalTitle">Anexar Imagens</div>
-        <button class="closeBtn" id="closeUploads"><i class="fa-solid fa-xmark"></i></button>
+        <button class="closeBtn closeUploadsBtn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
       <div class="modalBody">
         <div class="uploadGrid">
@@ -530,7 +558,9 @@
         <div class="modalTitle">Engenharia de Prompt</div>
         <div style="display:flex; gap:10px;">
           <button class="btn btnMuted" id="copyPrompt"><i class="fa-solid fa-copy"></i> Copiar</button>
-          <button class="closeBtn" id="closePrompt"><i class="fa-solid fa-xmark"></i></button>
+          <button class="closeBtn closePromptBtn">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
       </div>
       <div class="modalBody">
@@ -541,9 +571,9 @@
 
   <script>
     // ==========================================
-    // SEU LINK ATUALIZADO (VERSÃO 7)
+    // SEU LINK (VERSÃO 8)
     // ==========================================
-    const COFRE_URL = "https://script.google.com/macros/s/AKfycbwGdGbFSGd4MqSqNfSgu1lQXO7epV4fHUpjGYsjXa2XALnD3qKxl67sRVuwi-smjicZ/exec";
+    const COFRE_URL = "https://script.google.com/macros/s/AKfycbzqmbN-rqflKXYOS2WuNClRArBdz8EQ8SZYCue-eA3Wuh8zHYCiBhyqy7twv7UMKyfN/exec";
     const LS_KEY = "afrodite_key";
 
     const state = {
@@ -566,15 +596,25 @@
 
     function openModal(id){ $(id).classList.add("show"); }
     function closeModal(id){ $(id).classList.remove("show"); }
-    ["ovConfig","ovUploads","ovPrompt"].forEach(id => {
-      $(id).addEventListener("click", (e) => { if(e.target === $(id)) closeModal(id); });
+    
+    // Fechar clicando fora
+    ["ovConfig","ovHelp","ovUploads","ovPrompt"].forEach(id => {
+      $(id).addEventListener("mousedown", (e) => { if(e.target === $(id)) closeModal(id); });
     });
 
+    // Abrir Modais
     $("btnConfig").addEventListener("click", ()=> openModal("ovConfig"));
-    $("closeConfig").addEventListener("click", ()=> closeModal("ovConfig"));
+    $("btnHelp").addEventListener("click", ()=> openModal("ovHelp"));
     $("btnUploads").addEventListener("click", ()=> openModal("ovUploads"));
-    $("closeUploads").addEventListener("click", ()=> closeModal("ovUploads"));
-    $("closePrompt").addEventListener("click", ()=> closeModal("ovPrompt"));
+    
+    // Fechar Modais (Botões X com SVG garantido)
+    document.querySelectorAll(".closeConfigBtn").forEach(btn => btn.addEventListener("click", ()=> closeModal("ovConfig")));
+    document.querySelectorAll(".closeHelpBtn").forEach(btn => btn.addEventListener("click", ()=> closeModal("ovHelp")));
+    document.querySelectorAll(".closeUploadsBtn").forEach(btn => btn.addEventListener("click", ()=> closeModal("ovUploads")));
+    document.querySelectorAll(".closePromptBtn").forEach(btn => btn.addEventListener("click", ()=> closeModal("ovPrompt")));
+
+    $("btnSupport").addEventListener("click", ()=> toast("Suporte via E-mail: suporte@seuapp.com"));
+    $("btnProducts").addEventListener("click", ()=> toast("Em breve novos lançamentos."));
 
     $("getKey").addEventListener("click", ()=> window.open("https://aistudio.google.com/app/apikey", "_blank"));
     $("saveKey").addEventListener("click", ()=>{
@@ -588,11 +628,13 @@
 
     const popovers = ["popMode","popFormat","popStyle"];
     function closeAllPops(){ popovers.forEach(id => $(id).classList.remove("show")); }
-    document.addEventListener("click", ()=> closeAllPops());
-    $("dock").addEventListener("click", (e)=> e.stopPropagation());
+    document.addEventListener("mousedown", (e)=>{
+      if(!e.target.closest('.popWrap')) closeAllPops();
+    });
+    $("dock").addEventListener("mousedown", (e)=> e.stopPropagation());
     
     document.querySelectorAll(".popTrigger").forEach(btn=>{
-      btn.addEventListener("click",(e)=>{
+      btn.addEventListener("mousedown",(e)=>{
         e.stopPropagation();
         const popId = btn.dataset.pop;
         const isShown = $(popId).classList.contains("show");
@@ -602,7 +644,7 @@
     });
 
     // MODE
-    $("modeChoices").addEventListener("click",(e)=>{
+    $("modeChoices").addEventListener("mousedown",(e)=>{
       const b = e.target.closest("[data-mode]");
       if(!b) return;
       document.querySelectorAll("#modeChoices .opt").forEach(x=>x.classList.remove("active"));
@@ -613,7 +655,7 @@
     });
 
     // FORMAT
-    $("formatChoices").addEventListener("click",(e)=>{
+    $("formatChoices").addEventListener("mousedown",(e)=>{
       const b = e.target.closest("[data-format]");
       if(!b) return;
       document.querySelectorAll("#formatChoices .tile").forEach(x=>x.classList.remove("active"));
@@ -624,7 +666,7 @@
     });
 
     // STYLE
-    $("styleChoices").addEventListener("click",(e)=>{
+    $("styleChoices").addEventListener("mousedown",(e)=>{
       const b = e.target.closest("[data-style]");
       if(!b) return;
       document.querySelectorAll("#styleChoices .listItem").forEach(x=>x.classList.remove("active"));
@@ -788,7 +830,7 @@
 
       $("btnRun").disabled = true;
       setStatus("Processando...", "#FFD92A");
-      toast("Trabalhando na arquitetura...");
+      toast("Trabalhando na requisição...");
 
       try{
         const res = await fetch(COFRE_URL, {
@@ -802,7 +844,7 @@
 
         if(data.status !== "success"){
           console.error(data);
-          toast("Erro: " + (data.message || "Falha ao gerar"));
+          toast("Erro: Verifique sua cota da API");
           setStatus("Erro na API", "#ff5555");
           updateRunEnabled();
           return;
