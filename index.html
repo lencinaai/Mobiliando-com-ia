@@ -54,24 +54,28 @@
     .listItem{ text-align:left; padding: 12px 16px; border-radius: 12px; border: none; background: transparent; color: #fff; cursor:pointer; width: 100%; }
     .listItem.active{ background: rgba(255,255,255,0.1); font-weight: 700; }
 
-    .toast{ position: fixed; left: 50%; top: 84px; transform: translate(-50%, -10px); z-index: 200; padding: 14px 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.8); color: #fff; font-size: 14px; display:flex; gap: 12px; align-items:center; opacity: 0; transition: 0.3s; }
-    .toast.show{ opacity: 1; transform: translate(-50%, 0); }
-
     .overlay{ position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.75); display:none; align-items:center; justify-content:center; padding: 20px; }
     .overlay.show{ display:flex; }
-    .modal{ width: min(700px, 100%); border-radius: 28px; background: rgba(18, 22, 20, 0.95); border: 1px solid rgba(255,255,255,0.12); overflow:hidden; }
+    .modal{ width: min(850px, 100%); border-radius: 28px; background: rgba(18, 22, 20, 0.95); border: 1px solid rgba(255,255,255,0.12); overflow:hidden; }
     .modalHead{ display:flex; align-items:center; justify-content:space-between; padding: 24px 30px; border-bottom: 1px solid rgba(255,255,255,0.06); }
     .closeBtn{ background: none; border: none; color: #fff; cursor: pointer; }
-    .modalBody{ padding: 30px; max-height: 70vh; overflow-y: auto; }
+    .modalBody{ padding: 30px; max-height: 75vh; overflow-y: auto; }
     .panel{ border-radius: 20px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); padding: 24px; margin-bottom: 20px; }
     .label{ font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; margin-bottom: 12px;}
     input[type="password"]{ width: 100%; height: 48px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.15); background: #000; color:#fff; padding: 0 16px; outline:none; margin-bottom: 12px; }
 
-    .slot{ border: 2px dashed rgba(255,255,255,0.15); border-radius: 20px; padding: 20px; min-height: 220px; display: flex; flex-direction: column; cursor: pointer; }
-    .preview{ flex: 1; border-radius: 14px; background: rgba(0,0,0,0.4); background-size: cover; background-position: center; margin: 10px 0; }
-    pre{ background: #000; padding: 20px; border-radius: 16px; color: #fff; font-family: monospace; white-space: pre-wrap; font-size: 14px; line-height: 1.6; }
+    /* Galeria de Estilos */
+    .styleGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+    .styleCard { background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden; transition: 0.3s; }
+    .styleCard img { width: 100%; height: 160px; object-fit: cover; background: #111; }
+    .styleCardInfo { padding: 16px; }
+    .styleCardTitle { font-weight: 700; font-size: 14px; color: var(--accent); margin-bottom: 4px; }
+    .styleCardDesc { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.4; }
 
-    @media (max-width: 600px){ .dock{ width: 100%; border-radius: 32px 32px 0 0; } }
+    .apiLink { color: var(--accent); font-size: 13px; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+    .apiLink:hover { text-decoration: underline; }
+
+    @media (max-width: 600px){ .styleGrid { grid-template-columns: 1fr; } .dock{ width: 100%; border-radius: 32px 32px 0 0; } }
   </style>
 </head>
 
@@ -79,11 +83,11 @@
   <header class="topbar">
     <div class="brand"><span class="brandDot"></span> Mobiliando com IA</div>
     <div class="topActions">
+      <button class="topBtn" id="btnStyles">Conheça os Estilos</button>
+      <button class="topBtn" id="btnProducts">Outros produtos</button>
       <button class="topBtn" id="btnConfig">Configurações</button>
     </div>
   </header>
-
-  <div class="toast" id="toast"></div>
 
   <main class="main"><i class="fa-solid fa-wand-magic-sparkles"></i></main>
 
@@ -99,7 +103,7 @@
         </div>
       </div>
       <div class="dockBody">
-        <textarea class="prompt" id="userPrompt" rows="2" placeholder="Descreva o que deseja no ambiente..."></textarea>
+        <textarea class="prompt" id="userPrompt" rows="2" placeholder="Instruções extras? Onde fica o sofá? A cozinha?"></textarea>
       </div>
       <div class="dockBottom">
         <div class="popWrap">
@@ -118,10 +122,11 @@
           <div class="pop" id="popStyle">
             <div class="popTitle">Estilo</div>
             <button class="listItem active" data-style="AUTO">Decisão da IA</button>
-            <button class="listItem" data-style="Minimalista">Minimalista Quente</button>
-            <button class="listItem" data-style="Contemporâneo">Contemporâneo Neutro</button>
-            <button class="listItem" data-style="Escandinavo">Escandinavo Natural</button>
-            <button class="listItem" data-style="Industrial">Urbano Industrial</button>
+            <button class="listItem" data-style="E01">Minimalista Quente</button>
+            <button class="listItem" data-style="E02">Contemporâneo Neutro</button>
+            <button class="listItem" data-style="E03">Escandinavo Natural</button>
+            <button class="listItem" data-style="E04">Urbano Industrial</button>
+            <button class="listItem" data-style="E05">Mediterrâneo Atemporal</button>
           </div>
         </div>
       </div>
@@ -132,11 +137,14 @@
     <div class="modal">
       <div class="modalHead">
         <b>Configurações</b>
-        <button class="closeBtn closeConfigBtn"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="closeBtn closeConfigBtn"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modalBody">
         <div class="panel">
-          <div class="label">Google Gemini API Key</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <div class="label" style="margin:0">Google Gemini API Key</div>
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" class="apiLink">Criar minha chave <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          </div>
           <input type="password" id="apiKey" placeholder="Cole sua chave aqui...">
           <button style="background:var(--accent); color:#000; width:100%; height:44px; border-radius:12px; border:none; cursor:pointer; font-weight:bold;" id="saveKey">Guardar Chave</button>
         </div>
@@ -144,56 +152,78 @@
     </div>
   </div>
 
-  <div class="overlay" id="ovUploads">
+  <div class="overlay" id="ovStyles">
     <div class="modal">
       <div class="modalHead">
-        <b>Foto do Ambiente</b>
-        <button class="closeBtn closeUploadsBtn"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <b>Biblioteca de Estilos</b>
+        <button class="closeBtn closeStylesBtn"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modalBody">
-        <div class="slot" id="slotBase">
-          <b>Clique para anexar</b>
-          <div class="preview" id="prevBase"></div>
-          <input type="file" id="fileBase" accept="image/*" hidden>
+        <div class="styleGrid">
+          <div class="styleCard">
+            <img src="https://res.cloudinary.com/dxzatenvb/image/upload/v1778782723/E01_gdvqij.jpg" alt="Minimalista Quente">
+            <div class="styleCardInfo">
+              <div class="styleCardTitle">E01 — Minimalista Quente</div>
+              <div class="styleCardDesc">Madeira mel, tons off-white e linho. Aconchego premium.</div>
+            </div>
+          </div>
+          <div class="styleCard">
+            <img src="https://res.cloudinary.com/dxzatenvb/image/upload/v1778782723/02_dddx4q.jpg" alt="Contemporâneo Neutro">
+            <div class="styleCardInfo">
+              <div class="styleCardTitle">E02 — Contemporâneo Neutro</div>
+              <div class="styleCardDesc">Mármore, preto fosco e cinzas sofisticados.</div>
+            </div>
+          </div>
+          <div class="styleCard">
+            <img src="https://res.cloudinary.com/dxzatenvb/image/upload/v1778782723/E03_uyjolf.jpg" alt="Escandinavo Natural">
+            <div class="styleCardInfo">
+              <div class="styleCardTitle">E03 — Escandinavo Natural</div>
+              <div class="styleCardDesc">Luz abundante, madeira clara e fibras naturais.</div>
+            </div>
+          </div>
+          <div class="styleCard">
+            <img src="https://res.cloudinary.com/dxzatenvb/image/upload/v1778782722/E04_k4ixcl.jpg" alt="Urbano Industrial">
+            <div class="styleCardInfo">
+              <div class="styleCardTitle">E04 — Urbano Industrial</div>
+              <div class="styleCardDesc">Cimento queimado, metal e couro. Loft moderno.</div>
+            </div>
+          </div>
+          <div class="styleCard">
+            <img src="https://res.cloudinary.com/dxzatenvb/image/upload/v1778782722/E05_pvaw2k.jpg" alt="Mediterrâneo Atemporal">
+            <div class="styleCardInfo">
+              <div class="styleCardTitle">E05 — Mediterrâneo Atemporal</div>
+              <div class="styleCardDesc">Branco cal, areia e texturas rústicas. Praia de luxo.</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <div class="overlay" id="ovUploads">
+    <div class="modal">
+      <div class="modalHead"><b>Foto do Ambiente</b><button class="closeBtn closeUploadsBtn"><i class="fa-solid fa-xmark"></i></button></div>
+      <div class="modalBody"><div class="slot" id="slotBase"><b>Anexar foto original</b><div class="preview" id="prevBase"></div><input type="file" id="fileBase" accept="image/*" hidden></div></div>
+    </div>
+  </div>
+
   <div class="overlay" id="ovPrompt">
     <div class="modal">
-      <div class="modalHead">
-        <b>Prompt de Staging Gerado</b>
-        <button class="closeBtn closePromptBtn"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      </div>
-      <div class="modalBody">
-        <pre id="promptResult"></pre>
-        <button class="ctaBtn" style="width:100%; margin-top:20px;" id="copyBtn">Copiar Prompt</button>
-      </div>
+      <div class="modalHead"><b>Prompt Gerado</b><button class="closeBtn closePromptBtn"><i class="fa-solid fa-xmark"></i></button></div>
+      <div class="modalBody"><pre id="promptResult"></pre><button class="ctaBtn" style="width:100%; margin-top:20px;" id="copyBtn">Copiar Prompt</button></div>
     </div>
   </div>
 
   <script>
-    // AQUI ESTÁ A SUA URL NOVA, JÁ EMBUTIDA CORRETAMENTE.
     const COFRE_URL = "https://script.google.com/macros/s/AKfycbxuROH1GbzDRJ1MOLFKumEcY3QtylHSF_w3GFFIfYAt4nDUWsJZdAiJx8FHxMcBI2RDRw/exec";
-    
     const state = { format: "16:9", style: "AUTO", base: null };
     const $ = id => document.getElementById(id);
 
     function openModal(id) { $(id).classList.add('show'); }
     function closeModal(id) { $(id).classList.remove('show'); }
 
-    document.querySelectorAll('.popTrigger').forEach(btn => {
-      btn.onclick = (e) => {
-        e.stopPropagation();
-        const popId = btn.dataset.pop;
-        const wasShown = $(popId).classList.contains('show');
-        document.querySelectorAll('.pop').forEach(p => p.classList.remove('show'));
-        if(!wasShown) $(popId).classList.add('show');
-      }
-    });
-    document.onclick = () => document.querySelectorAll('.pop').forEach(p => p.classList.remove('show'));
-
+    $('btnStyles').onclick = () => openModal('ovStyles');
+    $('btnProducts').onclick = () => alert("Página de vendas em breve!");
     $('btnConfig').onclick = () => openModal('ovConfig');
     
     $('saveKey').onclick = () => {
@@ -237,12 +267,14 @@
     });
 
     document.querySelectorAll('[data-style]').forEach(b => b.onclick = () => {
-        state.style = b.dataset.style; $('styleLabel').innerText = state.style;
+        state.style = b.dataset.style; 
+        $('styleLabel').innerText = b.innerText.split('—')[0].trim();
         document.querySelectorAll('[data-style]').forEach(x => x.classList.remove('active'));
         b.classList.add('active');
     });
 
     document.querySelectorAll('.closeConfigBtn').forEach(btn => btn.onclick = () => closeModal('ovConfig'));
+    document.querySelectorAll('.closeStylesBtn').forEach(btn => btn.onclick = () => closeModal('ovStyles'));
     document.querySelectorAll('.closeUploadsBtn').forEach(btn => btn.onclick = () => closeModal('ovUploads'));
     document.querySelectorAll('.closePromptBtn').forEach(btn => btn.onclick = () => closeModal('ovPrompt'));
 
@@ -250,40 +282,34 @@
       const key = localStorage.getItem('afrodite_key');
       const canRun = state.base && key;
       $('btnRun').disabled = !canRun;
-      
       if (!key) $('statusText').innerText = "Insira a Chave API";
-      else if (!state.base) $('statusText').innerText = "Anexe a foto da sala";
-      else $('statusText').innerText = "Pronto para Ler a Imagem";
+      else if (!state.base) $('statusText').innerText = "Anexe a foto";
+      else $('statusText').innerText = "Pronto para Gerar";
     }
 
     $('btnRun').onclick = async () => {
       $('btnRun').disabled = true;
-      $('statusText').innerText = "A conversar com o Google...";
-      
+      $('statusText').innerText = "Processando...";
       const payload = {
         key: localStorage.getItem('afrodite_key'),
         configs: { estilo: state.style, formato: state.format, prompt_usuario: $('userPrompt').value },
         images: { base: state.base }
       };
-
       try {
         const res = await fetch(COFRE_URL, { method: 'POST', body: JSON.stringify(payload) });
         const data = await res.json();
-        
         if(data.status === 'success') {
           $('promptResult').innerText = data.prompt_used;
           openModal('ovPrompt');
           $('statusText').innerText = "Sucesso!";
         } else {
           alert(data.message); 
-          $('statusText').innerText = "Erro na API";
+          $('statusText').innerText = "Erro";
         }
       } catch (e) {
-        alert("Falha grave de conexão. O servidor não respondeu.");
-        $('statusText').innerText = "Cofre Offline";
-      } finally {
-        setTimeout(updateRun, 2000);
-      }
+        alert("Falha de conexão.");
+        $('statusText').innerText = "Erro";
+      } finally { setTimeout(updateRun, 2000); }
     };
 
     $('copyBtn').onclick = () => {
