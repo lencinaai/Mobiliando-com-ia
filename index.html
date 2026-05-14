@@ -64,7 +64,7 @@
     .label{ font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; margin-bottom: 12px;}
     input[type="password"]{ width: 100%; height: 48px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.15); background: #000; color:#fff; padding: 0 16px; outline:none; margin-bottom: 12px; }
 
-    /* Galeria de Estilos */
+    /* Galeria de Estilos (Cloudinary) */
     .styleGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
     .styleCard { background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden; transition: 0.3s; }
     .styleCard img { width: 100%; height: 160px; object-fit: cover; background: #111; }
@@ -74,6 +74,10 @@
 
     .apiLink { color: var(--accent); font-size: 13px; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px; }
     .apiLink:hover { text-decoration: underline; }
+
+    .slot{ border: 2px dashed rgba(255,255,255,0.15); border-radius: 20px; padding: 20px; min-height: 220px; display: flex; flex-direction: column; cursor: pointer; }
+    .preview{ flex: 1; border-radius: 14px; background: rgba(0,0,0,0.4); background-size: cover; background-position: center; margin: 10px 0; min-height: 150px; }
+    pre{ background: #000; padding: 20px; border-radius: 16px; color: #fff; font-family: monospace; white-space: pre-wrap; font-size: 14px; line-height: 1.6; }
 
     @media (max-width: 600px){ .styleGrid { grid-template-columns: 1fr; } .dock{ width: 100%; border-radius: 32px 32px 0 0; } }
   </style>
@@ -203,7 +207,13 @@
   <div class="overlay" id="ovUploads">
     <div class="modal">
       <div class="modalHead"><b>Foto do Ambiente</b><button class="closeBtn closeUploadsBtn"><i class="fa-solid fa-xmark"></i></button></div>
-      <div class="modalBody"><div class="slot" id="slotBase"><b>Anexar foto original</b><div class="preview" id="prevBase"></div><input type="file" id="fileBase" accept="image/*" hidden></div></div>
+      <div class="modalBody">
+        <div class="slot" id="slotBase">
+          <b>Clique para anexar a foto original</b>
+          <div class="preview" id="prevBase"></div>
+          <input type="file" id="fileBase" accept="image/*" hidden>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -228,8 +238,9 @@
     
     $('saveKey').onclick = () => {
       localStorage.setItem('afrodite_key', $('apiKey').value);
-      alert('Chave guardada!');
+      alert('Chave guardada com sucesso!');
       updateRun();
+      closeModal('ovConfig');
     };
 
     $('btnUploads').onclick = () => openModal('ovUploads');
@@ -254,11 +265,23 @@
     }
 
     $('fileBase').onchange = async e => {
+      if(!e.target.files[0]) return;
       state.base = await processImg(e.target.files[0], 800); 
       $('prevBase').style.backgroundImage = `url(${state.base})`;
       updateRun();
       closeModal('ovUploads');
     };
+
+    document.querySelectorAll('.popTrigger').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const popId = btn.dataset.pop;
+        const wasShown = $(popId).classList.contains('show');
+        document.querySelectorAll('.pop').forEach(p => p.classList.remove('show'));
+        if(!wasShown) $(popId).classList.add('show');
+      }
+    });
+    document.onclick = () => document.querySelectorAll('.pop').forEach(p => p.classList.remove('show'));
 
     document.querySelectorAll('[data-format]').forEach(b => b.onclick = () => {
         state.format = b.dataset.format; $('formatLabel').innerText = state.format;
@@ -282,39 +305,45 @@
       const key = localStorage.getItem('afrodite_key');
       const canRun = state.base && key;
       $('btnRun').disabled = !canRun;
-      if (!key) $('statusText').innerText = "Insira a Chave API";
-      else if (!state.base) $('statusText').innerText = "Anexe a foto";
-      else $('statusText').innerText = "Pronto para Gerar";
+      
+      if (!key) $('statusText').innerText = "Insira a Chave API nas Configurações";
+      else if (!state.base) $('statusText').innerText = "Anexe a foto do ambiente";
+      else $('statusText').innerText = "Pronto para Ler a Imagem";
     }
 
     $('btnRun').onclick = async () => {
       $('btnRun').disabled = true;
-      $('statusText').innerText = "Processando...";
+      $('statusText').innerText = "A analisar a arquitetura...";
+      
       const payload = {
         key: localStorage.getItem('afrodite_key'),
         configs: { estilo: state.style, formato: state.format, prompt_usuario: $('userPrompt').value },
         images: { base: state.base }
       };
+
       try {
         const res = await fetch(COFRE_URL, { method: 'POST', body: JSON.stringify(payload) });
         const data = await res.json();
+        
         if(data.status === 'success') {
           $('promptResult').innerText = data.prompt_used;
           openModal('ovPrompt');
           $('statusText').innerText = "Sucesso!";
         } else {
           alert(data.message); 
-          $('statusText').innerText = "Erro";
+          $('statusText').innerText = "Erro na IA";
         }
       } catch (e) {
-        alert("Falha de conexão.");
-        $('statusText').innerText = "Erro";
-      } finally { setTimeout(updateRun, 2000); }
+        alert("Falha de conexão. O servidor não respondeu. Certifique-se de que a API Key está correta.");
+        $('statusText').innerText = "Cofre Offline";
+      } finally {
+        setTimeout(updateRun, 2000);
+      }
     };
 
     $('copyBtn').onclick = () => {
       navigator.clipboard.writeText($('promptResult').innerText);
-      alert('Copiado!');
+      alert('Prompt Copiado!');
     };
 
     window.onload = () => {
