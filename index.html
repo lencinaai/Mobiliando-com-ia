@@ -9,6 +9,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <!-- Firebase Auth -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyDyf_2u9urdDAVbeoAjGEBvMLwgpQmYctc",
+      authDomain: "mobdec-ai.firebaseapp.com",
+      projectId: "mobdec-ai",
+      storageBucket: "mobdec-ai.firebasestorage.app",
+      messagingSenderId: "246381131827",
+      appId: "1:246381131827:web:b8ea225bd03800d48b0b46"
+    });
+  </script>
 
   <style>
     :root{
@@ -266,6 +279,23 @@
     }
     .imgChip .imgRemove:hover{ background:rgba(255,80,80,0.22); color:#ff6b6b; }
 
+    /* ============ LOGIN GATE ============ */
+    #loginGate{ position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center; background:var(--base-2); padding:24px; }
+    #loginGate.hidden{ display:none; }
+    .loginCard{ width:100%; max-width:400px; background:linear-gradient(135deg,rgba(30,38,54,0.92),rgba(18,24,38,0.97)); border:1px solid var(--line); border-radius:24px; padding:40px 36px; box-shadow:0 40px 80px rgba(0,0,0,0.65); text-align:center; }
+    .loginLogo{ font-family:"Fraunces",serif; font-size:30px; color:var(--text); margin-bottom:4px; }
+    .loginLogo em{ color:var(--gold); font-style:italic; }
+    .loginSub{ color:var(--muted); font-size:13px; margin-bottom:32px; }
+    .loginField{ text-align:left; margin-bottom:16px; }
+    .loginField label{ font-size:11px; color:var(--muted); display:block; margin-bottom:6px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+    .loginInput{ width:100%; padding:12px 15px; border-radius:14px; box-sizing:border-box; border:1px solid var(--line); background:rgba(13,18,29,0.7); color:var(--text); font-size:14.5px; font-family:inherit; outline:none; transition:.2s; }
+    .loginInput:focus{ border-color:rgba(124,131,253,0.5); box-shadow:0 0 0 3px rgba(124,131,253,0.1); }
+    .loginBtn{ width:100%; height:48px; border-radius:14px; border:none; margin-top:8px; background:var(--gold); color:#1a1200; font-weight:700; font-size:15px; cursor:pointer; transition:.2s; font-family:inherit; }
+    .loginBtn:hover:not(:disabled){ transform:translateY(-1px); box-shadow:0 12px 28px rgba(198,168,107,0.4); }
+    .loginBtn:disabled{ opacity:.5; cursor:not-allowed; }
+    .loginErr{ color:#ff6b6b; font-size:13px; margin-top:12px; min-height:18px; }
+    .loginFooter{ color:rgba(154,164,178,0.55); font-size:11.5px; margin-top:24px; line-height:1.6; }
+
     /* uploads */
     .dropSlot{ border:1.5px dashed rgba(124,131,253,0.35); border-radius:18px; padding:48px 24px; text-align:center; cursor:pointer; transition:.25s var(--ease); background:rgba(124,131,253,0.04); }
     .dropSlot:hover{ background:rgba(124,131,253,0.1); border-color:var(--accent); }
@@ -304,6 +334,25 @@
     </defs>
   </svg>
 
+  <!-- LOGIN GATE -->
+  <div id="loginGate">
+    <div class="loginCard">
+      <div class="loginLogo">Mobiliando <em>IA</em></div>
+      <div class="loginSub">by Lencina.AI &nbsp;·&nbsp; Acesso licenciado</div>
+      <div class="loginField">
+        <label>E-mail</label>
+        <input class="loginInput" id="loginEmail" type="email" placeholder="seu@email.com" autocomplete="email">
+      </div>
+      <div class="loginField">
+        <label>Senha</label>
+        <input class="loginInput" id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="loginBtn" id="loginBtn">Entrar</button>
+      <div class="loginErr" id="loginErr"></div>
+      <div class="loginFooter">Acesso mediante licença ativa.<br>Dúvidas? contatolencina.ai@gmail.com</div>
+    </div>
+  </div>
+
   <!-- TOPBAR -->
   <header class="topbar reveal d1">
     <div class="brand">
@@ -321,7 +370,7 @@
     <nav class="topActions">
       <button class="ghost" id="btnStyles"><i class="fa-solid fa-palette"></i><span>Estilos</span></button>
       <button class="ghost" id="btnProducts"><i class="fa-solid fa-gem"></i><span>Produtos</span></button>
-      <button class="ghost" id="btnConfig"><i class="fa-solid fa-key"></i><span>Configurações</span></button>
+      <button class="ghost" id="btnConfig"><i class="fa-solid fa-circle-user"></i><span>Conta</span></button>
     </nav>
   </header>
 
@@ -396,7 +445,7 @@
   <div class="overlay" id="ovConfig">
     <div class="modal">
       <div class="modalHead">
-        <div><h3>Configurações</h3><div class="sub2">Conecte a sua chave gratuita do Google Gemini</div></div>
+        <div><h3>Configurações</h3><div class="sub2">API Key · Conta logada</div></div>
         <button class="closeBtn closeConfigBtn"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modalBody">
@@ -410,6 +459,16 @@
           </div>
           <input type="password" id="apiKey" placeholder="Cole a sua chave aqui (AIza...)" autocomplete="off" />
           <button class="saveBtn" id="saveKey">Salvar chave</button>
+          <div style="margin:20px 0 16px;border-top:1px solid var(--line);"></div>
+          <div class="configRow" style="margin-bottom:10px;">
+            <div>
+              <label>Conta ativa</label>
+              <div class="hint" id="userEmailDisplay" style="margin-top:4px;">—</div>
+            </div>
+          </div>
+          <button class="saveBtn" id="logoutBtn" style="background:rgba(255,80,80,0.10);border:1px solid rgba(255,80,80,0.25);color:#ff6b6b;">
+            <i class="fa-solid fa-right-from-bracket"></i> Sair da conta
+          </button>
         </div>
       </div>
     </div>
@@ -584,10 +643,11 @@
 
     function updateRun(){
       const key = (localStorage.getItem("afrodite_key") || "").trim();
-      const canRun = !!state.base && !!key;
+      const loggedIn = !!firebase.auth().currentUser;
+      const canRun = !!state.base && !!key && loggedIn;
       $("btnRun").disabled = !canRun;
       const st = $("statusText");
-      if (!key){ st.className = "status"; st.querySelector(".t").innerText = "Insira a chave da API nas Configurações"; }
+      if (!key){ st.className = "status"; st.querySelector(".t").innerText = "Configure sua API Key em Conta"; }
       else if (!state.base){ st.className = "status"; st.querySelector(".t").innerText = "Anexe a foto do ambiente"; }
       else { st.className = "status ready"; st.querySelector(".t").innerText = "Pronto para ler a imagem"; }
     }
@@ -595,12 +655,14 @@
     $("btnRun").onclick = async () => {
       $("btnRun").disabled = true;
       const st = $("statusText"); st.className = "status ready"; st.querySelector(".t").innerText = "Analisando a arquitetura...";
-      const payload = {
-        key: (localStorage.getItem("afrodite_key") || "").trim(),
-        configs: { estilo: state.style, formato: state.format, prompt_usuario: $("userPrompt").value },
-        images: { base: state.base }
-      };
       try {
+        const idToken = await firebase.auth().currentUser.getIdToken();
+        const payload = {
+          key: (localStorage.getItem("afrodite_key") || "").trim(),
+          idToken: idToken,
+          configs: { estilo: state.style, formato: state.format, prompt_usuario: $("userPrompt").value },
+          images: { base: state.base }
+        };
         const res = await fetch(COFRE_URL, { method: "POST", body: JSON.stringify(payload) });
         const txt = await res.text();
         let data = null;
@@ -626,10 +688,53 @@
       alert("Prompt copiado!");
     };
 
+    // ===== Firebase Auth =====
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        document.getElementById("loginGate").classList.add("hidden");
+        document.getElementById("userEmailDisplay").textContent = user.email;
+      } else {
+        document.getElementById("loginGate").classList.remove("hidden");
+        document.getElementById("userEmailDisplay").textContent = "—";
+      }
+      updateRun();
+    });
+
+    document.getElementById("loginBtn").onclick = async () => {
+      const btn = document.getElementById("loginBtn");
+      const err = document.getElementById("loginErr");
+      const email = document.getElementById("loginEmail").value.trim();
+      const pass  = document.getElementById("loginPass").value;
+      err.textContent = "";
+      btn.disabled = true; btn.textContent = "Entrando...";
+      try {
+        await firebase.auth().signInWithEmailAndPassword(email, pass);
+      } catch(e) {
+        const msgs = {
+          "auth/invalid-email": "E-mail inválido.",
+          "auth/user-not-found": "Usuário não encontrado.",
+          "auth/wrong-password": "Senha incorreta.",
+          "auth/invalid-credential": "E-mail ou senha inválidos.",
+          "auth/too-many-requests": "Muitas tentativas. Aguarde e tente novamente."
+        };
+        err.textContent = msgs[e.code] || "Erro ao entrar. Tente novamente.";
+        btn.disabled = false; btn.textContent = "Entrar";
+      }
+    };
+
+    // Enter key no campo senha
+    document.getElementById("loginPass").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") document.getElementById("loginBtn").click();
+    });
+
+    document.getElementById("logoutBtn").onclick = async () => {
+      await firebase.auth().signOut();
+      closeModal("ovConfig");
+    };
+
     window.onload = () => {
       const k = (localStorage.getItem("afrodite_key") || "").trim();
       if (k) $("apiKey").value = k;
-      updateRun();
     };
   </script>
 </body>
