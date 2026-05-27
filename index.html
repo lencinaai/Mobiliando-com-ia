@@ -321,10 +321,69 @@
     .reveal{ opacity:0; transform:translateY(14px); animation: up .7s var(--ease) forwards; }
     @keyframes up{ to{ opacity:1; transform:none; } }
     .d1{ animation-delay:.05s; } .d2{ animation-delay:.18s; } .d3{ animation-delay:.32s; }
+
+    /* ============ CRYSTAL WATERMARK ============ */
+    .crystalWrap{
+      position:fixed; top:50%; left:50%; z-index:1; pointer-events:none;
+      width:min(880px,130vmin); height:min(880px,130vmin);
+      transform:translate(-50%,-56%);
+      animation: crystalDrift 220s linear infinite;
+    }
+    .crystalWrap svg{ width:100%; height:100%; opacity:0.042; }
+    @keyframes crystalDrift{ to{ transform:translate(-50%,-56%) rotate(360deg); } }
   </style>
 </head>
 <body>
   <div class="bg"><div class="ring"></div></div>
+
+  <!-- CRYSTAL WATERMARK — Lencina.AI brand mark, ultra-subtle -->
+  <div class="crystalWrap">
+    <svg viewBox="-200 -200 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- One arm: spine + branches + diamond terminal + orbs -->
+        <g id="lnk-arm">
+          <!-- Main spine -->
+          <line x1="0" y1="-17" x2="0" y2="-135" stroke-linecap="round"/>
+          <!-- Branch pair A (inner) -->
+          <line x1="0" y1="-68" x2="-26" y2="-94" stroke-linecap="round"/>
+          <line x1="0" y1="-68" x2="26"  y2="-94" stroke-linecap="round"/>
+          <!-- Sub-spurs on branch A -->
+          <line x1="-13" y1="-81" x2="-21" y2="-81" stroke-linecap="round"/>
+          <line x1="13"  y1="-81" x2="21"  y2="-81" stroke-linecap="round"/>
+          <!-- Branch pair B (outer) -->
+          <line x1="0" y1="-95" x2="-19" y2="-114" stroke-linecap="round"/>
+          <line x1="0" y1="-95" x2="19"  y2="-114" stroke-linecap="round"/>
+          <!-- Diamond terminal -->
+          <polygon points="0,-135 -9,-124 0,-117 9,-124" stroke-linejoin="round"/>
+          <!-- Orb at diamond tip -->
+          <circle cx="0"   cy="-139" r="3.8" fill="#7c83fd" stroke="none"/>
+          <!-- Orbs at outer branch tips -->
+          <circle cx="-26" cy="-94"  r="2.6" fill="#7c83fd" stroke="none"/>
+          <circle cx="26"  cy="-94"  r="2.6" fill="#7c83fd" stroke="none"/>
+          <!-- Orbs at inner branch tips -->
+          <circle cx="-19" cy="-114" r="2"   fill="#7c83fd" stroke="none"/>
+          <circle cx="19"  cy="-114" r="2"   fill="#7c83fd" stroke="none"/>
+        </g>
+      </defs>
+
+      <!-- 6 arms at 60° intervals -->
+      <g stroke="#7c83fd" stroke-width="1.6">
+        <use href="#lnk-arm" transform="rotate(0)"/>
+        <use href="#lnk-arm" transform="rotate(60)"/>
+        <use href="#lnk-arm" transform="rotate(120)"/>
+        <use href="#lnk-arm" transform="rotate(180)"/>
+        <use href="#lnk-arm" transform="rotate(240)"/>
+        <use href="#lnk-arm" transform="rotate(300)"/>
+      </g>
+
+      <!-- Center badge (chip Ai) -->
+      <rect x="-15" y="-15" width="30" height="30" rx="5"
+            stroke="#9aa0ff" stroke-width="1.8" fill="rgba(124,131,253,0.08)"/>
+      <!-- Inner center cross-hairs subtle -->
+      <line x1="-8" y1="0" x2="8" y2="0" stroke="#9aa0ff" stroke-width="0.8" opacity="0.5"/>
+      <line x1="0" y1="-8" x2="0" y2="8" stroke="#9aa0ff" stroke-width="0.8" opacity="0.5"/>
+    </svg>
+  </div>
 
   <!-- SVG defs (iris gradients) -->
   <svg width="0" height="0" style="position:absolute">
