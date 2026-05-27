@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mobiliando IA — Engenharia de Prompts de Interiores</title>
+  <title>Mobiliando com IA — Engenharia de Prompts de Interiores</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -102,6 +102,10 @@
     }
     .ghost i{ color:var(--accent-2); font-size:12px; }
     .ghost:hover{ background:rgba(124,131,253,0.12); border-color:rgba(124,131,253,0.4); transform:translateY(-1px); }
+    .socialBtn{ padding:0 14px; text-decoration:none; font-size:15px; }
+    .socialBtn i{ color:var(--muted); font-size:15px; transition:.2s; }
+    .socialBtn:hover i{ color:var(--accent-2); }
+    .socialBtn:hover{ background:rgba(124,131,253,0.10); border-color:rgba(124,131,253,0.3); }
 
     /* ============ STAGE ============ */
     .stage{
@@ -337,7 +341,7 @@
   <!-- LOGIN GATE -->
   <div id="loginGate">
     <div class="loginCard">
-      <div class="loginLogo">Mobiliando <em>IA</em></div>
+      <div class="loginLogo">Mobiliando com <em>IA</em></div>
       <div class="loginSub">by Lencina.AI &nbsp;·&nbsp; Acesso licenciado</div>
       <div class="loginField">
         <label>E-mail</label>
@@ -363,11 +367,14 @@
         <circle cx="21.6" cy="21.6" r="1.5" fill="#fff" opacity="0.85"/>
       </svg>
       <div class="brandText">
-        <div class="wordmark">Mobiliando <b>IA</b></div>
+        <div class="wordmark">Mobiliando com <b>IA</b></div>
         <div class="founder">by <b>Lencina.AI</b></div>
       </div>
     </div>
     <nav class="topActions">
+      <a class="ghost socialBtn" href="https://www.instagram.com/lencina.ai/" target="_blank" rel="noopener" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a class="ghost socialBtn" href="https://www.tiktok.com/@lencinaai" target="_blank" rel="noopener" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      <a class="ghost socialBtn" href="https://www.youtube.com/@LencinaAi" target="_blank" rel="noopener" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
       <button class="ghost" id="btnStyles"><i class="fa-solid fa-palette"></i><span>Estilos</span></button>
       <button class="ghost" id="btnProducts"><i class="fa-solid fa-gem"></i><span>Produtos</span></button>
       <button class="ghost" id="btnConfig"><i class="fa-solid fa-circle-user"></i><span>Conta</span></button>
@@ -384,9 +391,9 @@
         <circle cx="24" cy="24" r="6" fill="url(#pupilGrad)"/>
         <circle cx="21.6" cy="21.6" r="1.5" fill="#fff" opacity="0.85"/>
       </svg>
-      <div class="kicker"><span class="pulse"></span> Visão de IA · Interiores</div>
-      <h1 class="headline">Veja o vazio.<br><em>Mobilie</em> em segundos.</h1>
-      <p class="sub">Envie a foto de um ambiente, escolha o estilo e receba um prompt técnico pronto para gerar a renderização perfeita.</p>
+      <div class="kicker"><span class="pulse"></span> Simples · Rápido · Gratuito</div>
+      <h1 class="headline">Receba o prompt para mobiliar<br>qualquer ambiente — <em>em segundos.</em></h1>
+      <p class="sub">Envie a foto do ambiente. Escolha o estilo. Receba o prompt pronto para gerar a mobília com IA.</p>
     </div>
   </section>
 
@@ -450,25 +457,31 @@
       </div>
       <div class="modalBody">
         <div class="field">
-          <div class="configRow">
-            <div>
-              <label>Google Gemini API Key</label>
-              <div class="hint">Gratuita. Fica salva só no seu navegador — nunca no nosso servidor.</div>
-            </div>
-            <a class="apiLink" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Criar minha chave <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          <label>Google Gemini API Key</label>
+          <div class="hint" style="margin-bottom:14px;">
+            Gratuita. Fica salva só no seu navegador — nunca no nosso servidor.<br><br>
+            Crie sua chave e tenha <strong style="color:var(--text);">250 prompts renováveis por dia</strong> — equivalente a <strong style="color:var(--gold);">US$ 8,70/mês</strong> em créditos Google, <strong style="color:var(--text);">completamente grátis.</strong>
           </div>
+          <a class="apiLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="margin-bottom:4px;display:inline-flex;">
+            <i class="fa-solid fa-key"></i> Criar minha chave grátis <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
           <input type="password" id="apiKey" placeholder="Cole a sua chave aqui (AIza...)" autocomplete="off" />
           <button class="saveBtn" id="saveKey">Salvar chave</button>
-          <div style="margin:20px 0 16px;border-top:1px solid var(--line);"></div>
-          <div class="configRow" style="margin-bottom:10px;">
-            <div>
-              <label>Conta ativa</label>
-              <div class="hint" id="userEmailDisplay" style="margin-top:4px;">—</div>
-            </div>
-          </div>
+
+          <div style="margin:22px 0 16px;border-top:1px solid var(--line);"></div>
+          <label>Conta ativa</label>
+          <div class="hint" id="userEmailDisplay" style="margin-top:4px;margin-bottom:14px;">—</div>
           <button class="saveBtn" id="logoutBtn" style="background:rgba(255,80,80,0.10);border:1px solid rgba(255,80,80,0.25);color:#ff6b6b;">
             <i class="fa-solid fa-right-from-bracket"></i> Sair da conta
           </button>
+
+          <div style="margin:22px 0 16px;border-top:1px solid var(--line);"></div>
+          <label>Suporte</label>
+          <div class="hint" style="margin-bottom:12px;">Dúvidas ou problemas? Estamos aqui para ajudar.</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="mailto:contatolencina.ai@gmail.com" class="apiLink"><i class="fa-solid fa-envelope"></i> contatolencina.ai@gmail.com</a>
+            <a href="https://www.instagram.com/lencina.ai/" target="_blank" rel="noopener" class="apiLink"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          </div>
         </div>
       </div>
     </div>
