@@ -622,7 +622,7 @@
     function closeModal(id){ $(id).classList.remove("show"); }
 
     $("btnStyles").onclick = () => openModal("ovStyles");
-    $("btnProducts").onclick = () => alert("Página de vendas em breve!");
+    $("btnProducts").onclick = () => window.open("https://micro-apps-lencina-ai.vercel.app", "_blank");
     $("btnConfig").onclick = () => openModal("ovConfig");
 
     $("saveKey").onclick = () => {
